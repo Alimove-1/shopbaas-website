@@ -132,7 +132,11 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 .phone-notch::after{content:'';width:8px;height:8px;background:var(--surface2);border-radius:50%;position:absolute;right:20px;top:8px;}
 .phone-screen{
   background:var(--bg);border-radius:24px;overflow:hidden;
-  min-height:480px;position:relative;
+  position:relative;
+}
+.phone-screenshot{
+  width:100%;display:block;
+  border-radius:0 0 24px 24px;
 }
 
 /* Fake deal cards inside phone */
@@ -200,7 +204,7 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
   overflow:hidden;
 }
 .stats-bar::before{
-  content:'';position:absolute;inset:0;
+  content:'';position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(90deg,rgba(108,92,231,.03),rgba(0,229,160,.03),rgba(108,92,231,.03));
 }
 .stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative;}
@@ -266,7 +270,7 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 /* ── DEALS PREVIEW ── */
 .deals-section{padding:100px 28px;position:relative;overflow:hidden;}
 .deals-section::before{
-  content:'';position:absolute;inset:0;
+  content:'';position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(108,92,231,.06),transparent 70%);
 }
 .deals-inner{max-width:1200px;margin:0 auto;position:relative;}
@@ -280,12 +284,12 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 }
 .deal-card:hover{border-color:rgba(108,92,231,.2);transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,0,0,.3);}
 .deal-card-img{
-  height:140px;background:var(--surface2);
+  height:105px;background:var(--surface2);
   display:flex;align-items:center;justify-content:center;
   font-size:48px;position:relative;overflow:hidden;
 }
 .deal-card-img::after{
-  content:'';position:absolute;inset:0;
+  content:'';position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg,transparent 50%,var(--surface) 100%);
 }
 .deal-discount{
@@ -306,6 +310,13 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
   font-size:10px;font-weight:600;padding:3px 10px;border-radius:6px;
   border:1px solid rgba(108,92,231,.15);
 }
+.deals-loading{
+  grid-column:1/-1;text-align:center;padding:60px 20px;
+  color:var(--muted);font-size:15px;
+}
+.deal-card-img img{
+  width:100%;height:100%;object-fit:cover;position:relative;z-index:1;
+}
 
 .deals-blur-overlay{
   position:relative;margin-top:-100px;padding-top:140px;
@@ -314,6 +325,72 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 }
 .deals-blur-text{font-family:'Outfit',sans-serif;font-weight:700;font-size:22px;margin-bottom:8px;}
 .deals-blur-sub{color:var(--muted);font-size:14px;margin-bottom:24px;}
+
+/* ── PRICING ── */
+.pricing{padding:120px 28px;position:relative;overflow:hidden;}
+.pricing::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 50% 50% at 50% 30%,rgba(0,229,160,.04),transparent 70%);
+}
+.pricing-inner{max-width:900px;margin:0 auto;position:relative;}
+.pricing-cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.pricing-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:24px;padding:40px 32px;
+  display:flex;flex-direction:column;position:relative;
+  transition:all .3s;
+}
+.pricing-card:hover{transform:translateY(-4px);}
+.pricing-card.pro{
+  border-color:rgba(108,92,231,.3);
+  background:linear-gradient(180deg,rgba(108,92,231,.06) 0%,var(--surface) 40%);
+  box-shadow:0 0 60px rgba(108,92,231,.1);
+}
+.pricing-popular{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:linear-gradient(135deg,var(--accent),#8b7cf7);
+  color:#fff;font-size:12px;font-weight:700;
+  padding:5px 18px;border-radius:20px;
+  letter-spacing:.5px;
+}
+.pricing-card-header{text-align:center;margin-bottom:32px;}
+.pricing-plan-name{
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;
+  color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;
+}
+.pricing-price{
+  font-family:'Outfit',sans-serif;font-weight:900;font-size:52px;
+  letter-spacing:-2px;line-height:1;
+}
+.pricing-card.pro .pricing-price{
+  background:linear-gradient(135deg,var(--accent2),var(--green));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.pricing-decimal{font-size:28px;font-weight:700;}
+.pricing-period{font-size:14px;color:var(--muted);margin-top:6px;}
+.pricing-features{display:flex;flex-direction:column;gap:14px;margin-bottom:32px;flex:1;}
+.pricing-feature{
+  display:flex;align-items:center;gap:10px;
+  font-size:14px;font-weight:500;
+}
+.pricing-feature.disabled{color:var(--muted);}
+.pricing-feature.highlight{color:var(--text);}
+.pricing-btn{
+  display:block;text-align:center;text-decoration:none;
+  padding:14px;border-radius:12px;font-size:15px;font-weight:700;
+  font-family:'Outfit',sans-serif;transition:all .3s;letter-spacing:.3px;
+}
+.pricing-btn-free{
+  background:var(--surface2);color:var(--text);
+  border:1px solid var(--border);
+}
+.pricing-btn-free:hover{border-color:var(--accent);transform:translateY(-2px);}
+.pricing-btn-pro{
+  background:linear-gradient(135deg,var(--accent),#8b7cf7);color:#fff;
+  box-shadow:0 4px 20px var(--accent-glow);border:none;
+}
+.pricing-btn-pro:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow);}
+@media(max-width:700px){.pricing-cards{grid-template-columns:1fr;max-width:400px;margin:0 auto;}}
 
 /* ── COUNTRIES ── */
 .countries{padding:80px 28px;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
@@ -332,7 +409,7 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 /* ── CTA ── */
 .cta{padding:120px 28px;position:relative;overflow:hidden;}
 .cta::before{
-  content:'';position:absolute;inset:0;
+  content:'';position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(ellipse 50% 70% at 50% 50%,rgba(108,92,231,.08),transparent 70%);
 }
 .cta-inner{max-width:700px;margin:0 auto;text-align:center;position:relative;}
@@ -349,9 +426,14 @@ footer{
   border-top:1px solid var(--border);
   padding:40px 28px;
   text-align:center;
+  position:relative;
+  z-index:10;
 }
 .footer-inner{max-width:1200px;margin:0 auto;}
-.footer-logo{font-family:'Outfit',sans-serif;font-weight:800;font-size:20px;color:var(--accent2);margin-bottom:8px;}
+.footer-logo{font-family:'Outfit',sans-serif;font-weight:800;font-size:20px;color:var(--accent2);margin-bottom:12px;}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:12px;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s;}
+.footer-links a:hover{color:var(--accent2);}
 .footer-text{font-size:13px;color:var(--muted);}
 
 /* ── ANIMATIONS ── */
@@ -391,6 +473,7 @@ footer{
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#deals">Deals</a>
+      <a href="#pricing">Prijzen</a>
       <a href="#download" class="nav-cta">Download App</a>
     </div>
   </div>
@@ -410,14 +493,14 @@ footer{
       <p class="hero-sub">Ontdek de beste supermarkt aanbiedingen, vergelijk prijzen en bespaar elke week. Eén app, alle winkels.</p>
       <div class="hero-buttons">
         <a href="#download" class="btn-app">
-          <span class="btn-app-icon">🍎</span>
+          <span class="btn-app-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg></span>
           <span class="btn-app-text">
             <small>Download in de</small>
             <strong>App Store</strong>
           </span>
         </a>
         <a href="#download" class="btn-app">
-          <span class="btn-app-icon">▶️</span>
+          <span class="btn-app-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92z" fill="#4285F4"/><path d="M17.556 8.236L5.097.917C4.674.67 4.203.605 3.77.723l10.023 10.023 3.763-2.51z" fill="#EA4335"/><path d="M17.556 15.764l-3.763-2.51L3.77 23.277c.433.118.904.053 1.327-.194l12.459-7.319z" fill="#34A853"/><path d="M20.994 12c0-.574-.257-1.14-.776-1.448l-2.662-1.316-3.763 2.51 3.763 2.51 2.662-1.316c.52-.307.776-.786.776-1.94z" fill="#FBBC05"/></svg></span>
           <span class="btn-app-text">
             <small>Beschikbaar op</small>
             <strong>Google Play</strong>
@@ -429,73 +512,18 @@ footer{
       <div class="phone-mockup">
         <div class="phone-notch"></div>
         <div class="phone-screen">
-          <div class="mock-header">
-            <div class="mock-header-title">🔥 Aanbiedingen</div>
-            <div class="mock-filters">
-              <div class="mock-filter active">Alle</div>
-              <div class="mock-filter">🇳🇱 NL</div>
-              <div class="mock-filter">🇩🇪 DE</div>
-              <div class="mock-filter">Zuivel</div>
-              <div class="mock-filter">Fruit</div>
-            </div>
-          </div>
-          <div class="mock-deals">
-            <div class="mock-deal">
-              <div class="mock-deal-placeholder" style="background:rgba(0,102,204,.15);">🧀</div>
-              <div class="mock-deal-info">
-                <div class="mock-deal-name">Goudse kaas 48+</div>
-                <div class="mock-deal-store">🟦 Albert Heijn</div>
-              </div>
-              <div class="mock-deal-price">
-                <div class="mock-deal-sale">€4.99</div>
-                <div class="mock-deal-orig">€7.49</div>
-              </div>
-            </div>
-            <div class="mock-deal">
-              <div class="mock-deal-placeholder" style="background:rgba(0,229,160,.1);">🥦</div>
-              <div class="mock-deal-info">
-                <div class="mock-deal-name">Broccoli per stuk</div>
-                <div class="mock-deal-store">🟧 Jumbo</div>
-              </div>
-              <div class="mock-deal-price">
-                <div class="mock-deal-sale">€0.89</div>
-                <div class="mock-deal-orig">€1.39</div>
-              </div>
-            </div>
-            <div class="mock-deal">
-              <div class="mock-deal-placeholder" style="background:rgba(255,159,67,.1);">🍊</div>
-              <div class="mock-deal-info">
-                <div class="mock-deal-name">Mandarijnen 1kg</div>
-                <div class="mock-deal-store">🔵 Lidl</div>
-              </div>
-              <div class="mock-deal-price">
-                <div class="mock-deal-sale">€1.49</div>
-                <div class="mock-deal-orig">€2.29</div>
-              </div>
-            </div>
-            <div class="mock-deal">
-              <div class="mock-deal-placeholder" style="background:rgba(239,107,107,.1);">🥩</div>
-              <div class="mock-deal-info">
-                <div class="mock-deal-name">Rundergehakt 500g</div>
-                <div class="mock-deal-store">🇩🇪 REWE</div>
-              </div>
-              <div class="mock-deal-price">
-                <div class="mock-deal-sale">€3.49</div>
-                <div class="mock-deal-orig">€5.99</div>
-              </div>
-            </div>
-          </div>
+          <img src="app-screenshot.png" alt="ShopBaas App" class="phone-screenshot"/>
         </div>
 
         <!-- Floating tags -->
         <div class="float-tag t1">
-          <span class="tag-icon">🔔</span> <span class="tag-green">Prijs gedaald!</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="tag-green">Prijs gedaald!</span>
         </div>
         <div class="float-tag t2">
-          <span class="tag-icon">⭐</span> <span class="tag-orange">50% korting</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span class="tag-orange">50% korting</span>
         </div>
         <div class="float-tag t3">
-          <span class="tag-icon">🛒</span> <span class="tag-accent">12 deals</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="tag-accent">140 deals</span>
         </div>
       </div>
     </div>
@@ -533,40 +561,53 @@ footer{
 
     <div class="features-grid">
       <div class="feature-card reveal">
-        <div class="feature-icon green">🔍</div>
+        <div class="feature-icon green">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
         <h3>Alle deals op één plek</h3>
         <p>Aanbiedingen van Albert Heijn, Jumbo, Lidl, Plus, Dirk en meer. Alles overzichtelijk per categorie.</p>
         <span class="feature-tag free">Gratis</span>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon purple">🎛️</div>
+        <div class="feature-icon purple">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent2)"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        </div>
         <h3>Slimme filters</h3>
         <p>Filter op winkel, categorie of land. Vind direct de aanbiedingen die voor jou relevant zijn.</p>
         <span class="feature-tag free">Gratis</span>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon orange">🔔</div>
+        <div class="feature-icon orange">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--orange)"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
         <h3>Product volgen</h3>
         <p>Stel alerts in voor je favoriete producten. Krijg een melding zodra de prijs daalt.</p>
         <span class="feature-tag pro">Pro</span>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon purple">❤️</div>
+        <div class="feature-icon purple">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent2)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
         <h3>Favorieten</h3>
         <p>Sla de beste deals op en bekijk ze later. Mis nooit meer een goede aanbieding.</p>
         <span class="feature-tag pro">Pro</span>
       </div>
       <div class="feature-card reveal">
-        <div class="feature-icon green">💬</div>
+        <div class="feature-icon green">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--green)"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
         <h3>Community</h3>
         <p>Deel tips en ervaringen met andere slimme shoppers per winkel. Samen besparen!</p>
-        <span class="feature-tag free">Gratis</span>
+        <span class="feature-tag pro">Pro</span>
       </div>
+
       <div class="feature-card reveal">
-        <div class="feature-icon orange">🇩🇪</div>
-        <h3>Nederland & Duitsland</h3>
-        <p>Vergelijk aanbiedingen aan beide kanten van de grens. Aldi, REWE, Kaufland, Edeka en meer.</p>
-        <span class="feature-tag free">Gratis</span>
+        <div class="feature-icon orange">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--orange)"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3>Duitsland</h3>
+        <p>Ontgrendel aanbiedingen van Aldi, REWE, Kaufland, Lidl DE en Edeka. Vergelijk prijzen over de grens.</p>
+        <span class="feature-tag pro">Pro</span>
       </div>
     </div>
   </div>
@@ -581,52 +622,8 @@ footer{
       <p class="section-sub reveal">Een voorproefje van de deals die je kunt vinden in de app.</p>
     </div>
 
-    <div class="deals-grid reveal">
-      <div class="deal-card">
-        <div class="deal-card-img">🧀<div class="deal-discount">-33%</div></div>
-        <div class="deal-card-body">
-          <div class="deal-card-store">🟦 Albert Heijn</div>
-          <div class="deal-card-name">Goudse kaas 48+ heel</div>
-          <div class="deal-card-prices">
-            <span class="deal-card-sale">€4.99</span>
-            <span class="deal-card-orig">€7.49</span>
-          </div>
-        </div>
-      </div>
-      <div class="deal-card">
-        <div class="deal-card-img">🍎<div class="deal-discount">-40%</div></div>
-        <div class="deal-card-body">
-          <div class="deal-card-store">🟧 Jumbo</div>
-          <div class="deal-card-name">Elstar appels 1.5kg</div>
-          <div class="deal-card-prices">
-            <span class="deal-card-sale">€1.99</span>
-            <span class="deal-card-orig">€3.29</span>
-          </div>
-          <div class="deal-card-promo">2e gratis</div>
-        </div>
-      </div>
-      <div class="deal-card">
-        <div class="deal-card-img">🥩<div class="deal-discount">-25%</div></div>
-        <div class="deal-card-body">
-          <div class="deal-card-store">🇩🇪 REWE</div>
-          <div class="deal-card-name">Rundergehakt 500g</div>
-          <div class="deal-card-prices">
-            <span class="deal-card-sale">€3.49</span>
-            <span class="deal-card-orig">€4.69</span>
-          </div>
-        </div>
-      </div>
-      <div class="deal-card">
-        <div class="deal-card-img">☕<div class="deal-discount">-30%</div></div>
-        <div class="deal-card-body">
-          <div class="deal-card-store">🔵 Lidl</div>
-          <div class="deal-card-name">Nespresso capsules 40st</div>
-          <div class="deal-card-prices">
-            <span class="deal-card-sale">€8.99</span>
-            <span class="deal-card-orig">€12.99</span>
-          </div>
-        </div>
-      </div>
+    <div class="deals-grid reveal" id="dealsGrid">
+      <div class="deals-loading">Deals laden…</div>
     </div>
 
     <div class="deals-blur-overlay">
@@ -634,14 +631,14 @@ footer{
       <div class="deals-blur-sub">Download de app voor alle aanbiedingen, filters en alerts.</div>
       <div class="hero-buttons" style="justify-content:center;">
         <a href="#download" class="btn-app">
-          <span class="btn-app-icon">🍎</span>
+          <span class="btn-app-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg></span>
           <span class="btn-app-text">
             <small>Download in de</small>
             <strong>App Store</strong>
           </span>
         </a>
         <a href="#download" class="btn-app">
-          <span class="btn-app-icon">▶️</span>
+          <span class="btn-app-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92z" fill="#4285F4"/><path d="M17.556 8.236L5.097.917C4.674.67 4.203.605 3.77.723l10.023 10.023 3.763-2.51z" fill="#EA4335"/><path d="M17.556 15.764l-3.763-2.51L3.77 23.277c.433.118.904.053 1.327-.194l12.459-7.319z" fill="#34A853"/><path d="M20.994 12c0-.574-.257-1.14-.776-1.448l-2.662-1.316-3.763 2.51 3.763 2.51 2.662-1.316c.52-.307.776-.786.776-1.94z" fill="#FBBC05"/></svg></span>
           <span class="btn-app-text">
             <small>Beschikbaar op</small>
             <strong>Google Play</strong>
@@ -672,6 +669,96 @@ footer{
   </div>
 </section>
 
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="pricing-inner">
+    <div class="section-label reveal">✦ Abonnementen</div>
+    <h2 class="section-title reveal" style="text-align:center;">Kies je plan</h2>
+    <p class="section-sub reveal" style="text-align:center;margin:0 auto 60px;">Begin gratis, upgrade wanneer je wilt.</p>
+
+    <div class="pricing-cards">
+      <div class="pricing-card reveal">
+        <div class="pricing-card-header">
+          <div class="pricing-plan-name">Gratis</div>
+          <div class="pricing-price">€0</div>
+          <div class="pricing-period">voor altijd</div>
+        </div>
+        <div class="pricing-features">
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Alle NL deals bekijken
+          </div>
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Filter op winkel & categorie
+          </div>
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Filter op korting %
+          </div>
+          <div class="pricing-feature disabled">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Product volgen & alerts
+          </div>
+          <div class="pricing-feature disabled">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Favorieten opslaan
+          </div>
+          <div class="pricing-feature disabled">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Community toegang
+          </div>
+          <div class="pricing-feature disabled">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Duitse deals (DE)
+          </div>
+        </div>
+        <a href="#download" class="pricing-btn pricing-btn-free">Download gratis</a>
+      </div>
+
+      <div class="pricing-card pro reveal">
+        <div class="pricing-popular">Populair</div>
+        <div class="pricing-card-header">
+          <div class="pricing-plan-name">Pro</div>
+          <div class="pricing-price">€3<span class="pricing-decimal">,99</span></div>
+          <div class="pricing-period">per maand</div>
+        </div>
+        <div class="pricing-features">
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Alle NL deals bekijken
+          </div>
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Filter op winkel & categorie
+          </div>
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Filter op korting %
+          </div>
+          <div class="pricing-feature highlight">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Product volgen & alerts
+          </div>
+          <div class="pricing-feature highlight">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Favorieten opslaan
+          </div>
+          <div class="pricing-feature highlight">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Community toegang
+          </div>
+          <div class="pricing-feature highlight">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Duitse deals (DE)
+          </div>
+        </div>
+        <a href="#download" class="pricing-btn pricing-btn-pro">Word Pro</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta" id="download">
   <div class="cta-inner">
@@ -679,14 +766,14 @@ footer{
     <p class="cta-sub reveal">Gratis te downloaden. Geen advertenties. Gewoon de beste deals, elke week.</p>
     <div class="cta-buttons reveal">
       <a href="#" class="btn-app">
-        <span class="btn-app-icon">🍎</span>
+        <span class="btn-app-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg></span>
         <span class="btn-app-text">
           <small>Download in de</small>
           <strong>App Store</strong>
         </span>
       </a>
       <a href="#" class="btn-app">
-        <span class="btn-app-icon">▶️</span>
+        <span class="btn-app-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92z" fill="#4285F4"/><path d="M17.556 8.236L5.097.917C4.674.67 4.203.605 3.77.723l10.023 10.023 3.763-2.51z" fill="#EA4335"/><path d="M17.556 15.764l-3.763-2.51L3.77 23.277c.433.118.904.053 1.327-.194l12.459-7.319z" fill="#34A853"/><path d="M20.994 12c0-.574-.257-1.14-.776-1.448l-2.662-1.316-3.763 2.51 3.763 2.51 2.662-1.316c.52-.307.776-.786.776-1.94z" fill="#FBBC05"/></svg></span>
         <span class="btn-app-text">
           <small>Beschikbaar op</small>
           <strong>Google Play</strong>
@@ -700,9 +787,104 @@ footer{
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">ShopBaas</div>
+    <div class="footer-links">
+      <a href="privacy.html">Privacybeleid</a>
+      <a href="terms.html">Gebruiksvoorwaarden</a>
+    </div>
     <div class="footer-text">© 2026 ShopBaas. Slimmer boodschappen doen.</div>
   </div>
 </footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, query, where, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyC0S3T-t-Jhl4tyz2b29H55_K76sv9thq0",
+  authDomain: "slimmer-383d4.firebaseapp.com",
+  projectId: "slimmer-383d4",
+  storageBucket: "slimmer-383d4.firebasestorage.app",
+  messagingSenderId: "771128674255",
+  appId: "1:771128674255:web:78607b33395e217dd774ba",
+});
+const db = getFirestore(app);
+
+const STORE_COLORS = {
+  'Albert Heijn': '#4da6ff',
+  'Jumbo': '#ffc515',
+  'Plus': '#00A550',
+  'Lidl': '#003DA5',
+  'Dirk': '#E31837',
+  'Aldi': '#00599d',
+  'Lidl DE': '#003DA5',
+  'REWE': '#cc071e',
+  'Kaufland': '#e30613',
+  'Edeka': '#ffd500',
+};
+
+async function loadDeals() {
+  const grid = document.getElementById('dealsGrid');
+  try {
+    // Get published deals with highest discount, only NL (free preview)
+    const today = new Date().toISOString().split('T')[0];
+    const q = query(
+      collection(db, 'deals'),
+      where('status', '==', 'published'),
+      where('country', '==', 'NL'),
+      limit(100)
+    );
+    const snap = await getDocs(q);
+    let deals = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+    // Filter to valid deals (not expired) and sort by discount
+    deals = deals
+      .filter(d => !d.validUntil || d.validUntil >= today)
+      .filter(d => d.discountPct && d.discountPct > 0)
+      .sort((a, b) => (b.discountPct || 0) - (a.discountPct || 0))
+      .slice(0, 8);
+
+    if (deals.length === 0) {
+      grid.innerHTML = '<div class="deals-loading">Geen actieve deals gevonden.</div>';
+      return;
+    }
+
+    grid.innerHTML = deals.map(deal => {
+      const color = STORE_COLORS[deal.store] || '#6b7394';
+      const hasImg = deal.imageUrl;
+      const imgHtml = hasImg
+        ? `<img src="${deal.imageUrl}" alt="${deal.product}" onerror="this.style.display='none'">`
+        : '';
+      const discount = deal.discountPct ? `-${deal.discountPct}%` : '';
+      const promo = deal.promoType && deal.promoType !== 'Aanbieding'
+        ? `<div class="deal-card-promo">${deal.promoType}</div>`
+        : '';
+
+      return `
+        <div class="deal-card">
+          <div class="deal-card-img" style="background:linear-gradient(135deg,#1a1f2e,#1e2538);">
+            ${imgHtml}
+            ${discount ? `<div class="deal-discount">${discount}</div>` : ''}
+          </div>
+          <div class="deal-card-body">
+            <div class="deal-card-store"><span style="color:${color};">●</span> ${deal.store}</div>
+            <div class="deal-card-name">${deal.product}</div>
+            <div class="deal-card-prices">
+              ${deal.salePrice ? `<span class="deal-card-sale">€${deal.salePrice.toFixed(2)}</span>` : ''}
+              ${deal.originalPrice ? `<span class="deal-card-orig">€${deal.originalPrice.toFixed(2)}</span>` : ''}
+            </div>
+            ${promo}
+          </div>
+        </div>`;
+    }).join('');
+
+  } catch (err) {
+    console.error('Error loading deals:', err);
+    grid.innerHTML = '<div class="deals-loading">Kon deals niet laden.</div>';
+  }
+}
+
+loadDeals();
+</script>
 
 <script>
 // Nav scroll effect
