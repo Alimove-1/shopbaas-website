@@ -781,14 +781,14 @@ async function loadDeals() {
       .filter(d => !d.validUntil || d.validUntil >= today)
       .filter(d => d.discountPct && d.discountPct > 0)
       .sort((a, b) => (b.discountPct || 0) - (a.discountPct || 0))
-      .slice(0, 8);
+      .slice(0, 30);
 
     if (deals.length === 0) {
       grid.innerHTML = '<div class="deals-loading">Geen actieve deals gevonden.</div>';
       return;
     }
 
-    grid.innerHTML = deals.map(deal => {
+    function renderCard(deal) {
       const color = STORE_COLORS[deal.store] || '#6b7394';
       const hasImg = deal.imageUrl;
       const imgHtml = hasImg
@@ -800,7 +800,7 @@ async function loadDeals() {
         : '';
 
       return `
-        <div class="deal-card">
+        <div class="deal-card" style="transition:opacity .4s;">
           <div class="deal-card-img" style="background:linear-gradient(135deg,#1a1f2e,#1e2538);">
             ${imgHtml}
             ${discount ? `<div class="deal-discount">${discount}</div>` : ''}
@@ -815,7 +815,36 @@ async function loadDeals() {
             ${promo}
           </div>
         </div>`;
-    }).join('');
+    }
+
+    // Show first 8, keep the rest as reserve
+    const visible = deals.slice(0, 8);
+    const reserve = deals.slice(8);
+    grid.innerHTML = visible.map(renderCard).join('');
+
+    // Every 6s, fade-swap a random card with one from the reserve
+    if (reserve.length > 0) {
+      setInterval(() => {
+        const cards = grid.querySelectorAll('.deal-card');
+        if (cards.length === 0) return;
+        const idx = Math.floor(Math.random() * cards.length);
+        const card = cards[idx];
+
+        // Pick a random reserve deal and cycle it
+        const swapDeal = reserve.shift();
+        reserve.push(visible[idx]);
+        visible[idx] = swapDeal;
+
+        // Fade out, swap, fade in
+        card.style.opacity = '0';
+        setTimeout(() => {
+          card.outerHTML = renderCard(swapDeal);
+          const newCard = grid.querySelectorAll('.deal-card')[idx];
+          newCard.style.opacity = '0';
+          requestAnimationFrame(() => { newCard.style.opacity = '1'; });
+        }, 400);
+      }, 6000);
+    }
 
   } catch (err) {
     console.error('Error loading deals:', err);
