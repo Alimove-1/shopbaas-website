@@ -126,7 +126,7 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 /* Hero visual — phone mockup */
 .hero-visual{display:flex;justify-content:center;animation:fadeUp .8s .2s ease both;}
 .phone-mockup{
-  position:relative;width:280px;
+  position:relative;width:308px;
   background:var(--surface);
   border-radius:36px;
   border:2px solid rgba(255,255,255,.08);
@@ -206,24 +206,6 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 .float-tag .tag-orange{color:var(--orange);}
 .float-tag .tag-accent{color:var(--accent2);}
 
-/* ── STATS BAR ── */
-.stats-bar{
-  position:relative;
-  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  background:var(--surface);
-  padding:40px 28px;
-  overflow:hidden;
-}
-.stats-bar::before{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(90deg,rgba(108,92,231,.03),rgba(0,229,160,.03),rgba(108,92,231,.03));
-}
-.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative;}
-.stat-item{text-align:center;}
-.stat-num{font-family:'Outfit',sans-serif;font-weight:800;font-size:36px;letter-spacing:-1px;margin-bottom:4px;}
-.stat-num .accent{color:var(--accent2);}
-.stat-num .green{color:var(--green);}
-.stat-label{font-size:13px;color:var(--muted);font-weight:500;}
 
 /* ── FEATURES ── */
 .features{padding:120px 28px;position:relative;}
@@ -403,19 +385,6 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 .pricing-btn-pro:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow);}
 @media(max-width:700px){.pricing-cards{grid-template-columns:1fr;max-width:400px;margin:0 auto;}}
 
-/* ── COUNTRIES ── */
-.countries{padding:80px 28px;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.countries-inner{max-width:1200px;margin:0 auto;text-align:center;}
-.country-cards{display:flex;justify-content:center;gap:24px;margin-top:40px;flex-wrap:wrap;}
-.country-card{
-  background:var(--bg);border:1px solid var(--border);
-  border-radius:20px;padding:32px 40px;
-  text-align:center;min-width:240px;transition:all .3s;
-}
-.country-card:hover{border-color:rgba(108,92,231,.2);transform:translateY(-4px);}
-.country-flag{font-size:48px;margin-bottom:12px;}
-.country-name{font-family:'Outfit',sans-serif;font-weight:700;font-size:20px;margin-bottom:6px;}
-.country-stores{font-size:13px;color:var(--muted);line-height:1.7;}
 
 /* ── CTA ── */
 .cta{padding:120px 28px;position:relative;overflow:hidden;}
@@ -462,16 +431,14 @@ footer{
   .hero-content{grid-template-columns:1fr;text-align:center;gap:40px;}
   .hero-sub{margin:0 auto 36px;}
   .hero-buttons{justify-content:center;}
-  .phone-mockup{transform:none;width:260px;}
+  .phone-mockup{transform:none;width:286px;}
   .float-tag{display:none;}
   .features-grid{grid-template-columns:1fr;}
   .deals-grid{grid-template-columns:repeat(2,1fr);}
-  .stats-inner{grid-template-columns:repeat(2,1fr);gap:32px;}
   .nav-links a:not(.nav-cta){display:none;}
 }
 @media(max-width:500px){
   .deals-grid{grid-template-columns:1fr;}
-  .stats-inner{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -541,27 +508,6 @@ footer{
   </div>
 </section>
 
-<!-- STATS BAR -->
-<section class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat-item reveal">
-      <div class="stat-num"><span class="accent">10</span></div>
-      <div class="stat-label">Supermarkten</div>
-    </div>
-    <div class="stat-item reveal">
-      <div class="stat-num"><span class="green">2</span></div>
-      <div class="stat-label">Landen (NL & DE)</div>
-    </div>
-    <div class="stat-item reveal">
-      <div class="stat-num"><span class="accent">100+</span></div>
-      <div class="stat-label">Deals per week</div>
-    </div>
-    <div class="stat-item reveal">
-      <div class="stat-num"><span class="green">Gratis</span></div>
-      <div class="stat-label">Te downloaden</div>
-    </div>
-  </div>
-</section>
 
 <!-- FEATURES -->
 <section class="features" id="features">
@@ -660,25 +606,6 @@ footer{
   </div>
 </section>
 
-<!-- COUNTRIES -->
-<section class="countries">
-  <div class="countries-inner">
-    <div class="section-label reveal">✦ Beschikbaar in</div>
-    <h2 class="section-title reveal">Twee landen, alle winkels</h2>
-    <div class="country-cards">
-      <div class="country-card reveal">
-        <div class="country-flag">🇳🇱</div>
-        <div class="country-name">Nederland</div>
-        <div class="country-stores">Albert Heijn · Jumbo · Lidl<br/>Plus · Dirk</div>
-      </div>
-      <div class="country-card reveal">
-        <div class="country-flag">🇩🇪</div>
-        <div class="country-name">Duitsland <span style="font-size:0.65em;opacity:0.5;font-style:italic">binnenkort</span></div>
-        <div class="country-stores">Aldi · Lidl DE · REWE<br/>Kaufland · Edeka</div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- PRICING -->
 <section class="pricing" id="pricing">
@@ -900,6 +827,10 @@ loadDeals();
 </script>
 
 <script>
+// Force scroll to top on page load (prevents browser restoring scroll position)
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
 // Nav scroll effect
 const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
