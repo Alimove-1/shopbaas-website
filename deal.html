@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ShopBaas — Aanbieding</title>
+<meta name="description" content="Bekijk deze aanbieding op ShopBaas"/>
+<meta property="og:title" content="ShopBaas — Aanbieding"/>
+<meta property="og:description" content="Bekijk deze aanbieding op ShopBaas"/>
+<meta property="og:image" content="https://shopbaas-site.web.app/app-screenshot.png"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="nl_NL"/>
+<meta name="theme-color" content="#06080d"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#06080d;
+  --surface:#0e1117;
+  --card:#111723;
+  --border:rgba(255,255,255,.06);
+  --accent:#6c5ce7;
+  --accent2:#a29bfe;
+  --green:#00e5a0;
+  --text:#f0f2f8;
+  --muted:#6b7394;
+  --radius:16px;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;-webkit-font-smoothing:antialiased;}
+
+.container{max-width:420px;width:100%;}
+
+.logo{text-align:center;margin-bottom:32px;}
+.logo span{font-family:'Outfit',sans-serif;font-weight:700;font-size:28px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.deal-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+
+.deal-image{width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--surface);}
+.deal-image-placeholder{width:100%;aspect-ratio:16/10;background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:48px;}
+
+.deal-body{padding:20px;}
+.deal-store{font-size:13px;font-weight:600;color:var(--accent2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
+.deal-product{font-family:'Outfit',sans-serif;font-size:22px;font-weight:600;line-height:1.3;margin-bottom:12px;}
+
+.deal-prices{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;}
+.deal-sale{font-family:'Outfit',sans-serif;font-size:28px;font-weight:700;color:var(--green);}
+.deal-original{font-size:16px;color:var(--muted);text-decoration:line-through;}
+
+.deal-valid{font-size:13px;color:var(--muted);margin-bottom:0;}
+
+.open-btn{
+  display:block;width:100%;margin-top:20px;padding:16px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;font-family:'Outfit',sans-serif;font-size:17px;font-weight:600;
+  border:none;border-radius:12px;cursor:pointer;text-align:center;text-decoration:none;
+  transition:transform .15s,box-shadow .15s;
+}
+.open-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(108,92,231,.35);}
+
+.footer-text{text-align:center;margin-top:24px;font-size:13px;color:var(--muted);}
+
+.loading,.error{text-align:center;padding:60px 20px;}
+.loading{color:var(--muted);font-size:16px;}
+.error{color:var(--muted);font-size:16px;}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="logo"><span>ShopBaas</span></div>
+  <div id="content">
+    <div class="loading">
+      <div class="spinner"></div>
+      Aanbieding laden...
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey: 'AIzaSyC0S3T-t-Jhl4tyz2b29H55_K76sv9thq0',
+  authDomain: 'slimmer-383d4.firebaseapp.com',
+  projectId: 'slimmer-383d4',
+  storageBucket: 'slimmer-383d4.firebasestorage.app',
+  messagingSenderId: '771128674255',
+  appId: '1:771128674255:web:78607b33395e217dd774ba',
+});
+const db = getFirestore(app);
+
+// Extract deal ID from URL: /deal/{id}
+const pathParts = window.location.pathname.split('/');
+const dealIdx = pathParts.indexOf('deal');
+const dealId = dealIdx >= 0 ? pathParts[dealIdx + 1] : null;
+
+const content = document.getElementById('content');
+
+if (!dealId) {
+  content.innerHTML = '<div class="error">Geen aanbieding gevonden.</div>';
+} else {
+  loadDeal(dealId);
+}
+
+async function loadDeal(id) {
+  try {
+    const snap = await getDoc(doc(db, 'deals', id));
+    if (!snap.exists()) {
+      content.innerHTML = '<div class="error">Deze aanbieding bestaat niet meer.</div>';
+      return;
+    }
+    const d = snap.data();
+    const name = d.product || d.name || d.title || 'Aanbieding';
+    const store = d.store || '';
+
+    // Update OG meta tags for link previews
+    document.title = `${name} bij ${store} — ShopBaas`;
+    setMeta('og:title', `${name} bij ${store}`);
+    setMeta('og:description', d.salePrice != null ? `Nu €${Number(d.salePrice).toFixed(2).replace('.', ',')}` : 'Bekijk op ShopBaas');
+    if (d.imageUrl) setMeta('og:image', d.imageUrl);
+
+    // Format price
+    const fmtPrice = (v) => '€' + Number(v).toFixed(2).replace('.', ',');
+
+    // Format date
+    let validStr = '';
+    if (d.validUntil) {
+      const dt = d.validUntil.toDate ? d.validUntil.toDate() : new Date(d.validUntil);
+      validStr = dt.toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    let html = '<div class="deal-card">';
+    if (d.imageUrl) {
+      html += `<img class="deal-image" src="${escHtml(d.imageUrl)}" alt="${escHtml(name)}" onerror="this.outerHTML='<div class=\\'deal-image-placeholder\\'>🛒</div>'"/>`;
+    } else {
+      html += '<div class="deal-image-placeholder">🛒</div>';
+    }
+    html += '<div class="deal-body">';
+    if (store) html += `<div class="deal-store">${escHtml(store)}</div>`;
+    html += `<div class="deal-product">${escHtml(name)}</div>`;
+    if (d.salePrice != null) {
+      html += '<div class="deal-prices">';
+      html += `<span class="deal-sale">${fmtPrice(d.salePrice)}</span>`;
+      if (d.originalPrice != null && d.originalPrice !== d.salePrice) {
+        html += `<span class="deal-original">${fmtPrice(d.originalPrice)}</span>`;
+      }
+      html += '</div>';
+    }
+    if (validStr) html += `<div class="deal-valid">Geldig t/m ${validStr}</div>`;
+    html += '</div></div>';
+
+    html += `<a class="open-btn" href="#" id="openBtn">Open in ShopBaas</a>`;
+    html += '<div class="footer-text">Vergelijk supermarkt aanbiedingen — gratis!</div>';
+
+    content.innerHTML = html;
+
+    document.getElementById('openBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      // Try custom scheme to open app
+      window.location.href = `shopbaas://deal/${id}`;
+      // Fallback: after 1.5s redirect to store (user doesn't have app)
+      setTimeout(() => {
+        const ua = navigator.userAgent.toLowerCase();
+        if (/iphone|ipad|ipod/.test(ua)) {
+          window.location.href = 'https://apps.apple.com/app/shopbaas/id6746427498';
+        } else {
+          window.location.href = 'https://play.google.com/store/apps/details?id=com.shopbaas.app';
+        }
+      }, 1500);
+    });
+  } catch (err) {
+    console.error('Deal laden mislukt:', err);
+    content.innerHTML = '<div class="error">Kon de aanbieding niet laden. Probeer het opnieuw.</div>';
+  }
+}
+
+function setMeta(prop, val) {
+  let el = document.querySelector(`meta[property="${prop}"]`);
+  if (el) el.setAttribute('content', val);
+}
+
+function escHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
