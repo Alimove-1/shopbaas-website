@@ -386,7 +386,7 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 @media(max-width:700px){.pricing-cards{grid-template-columns:1fr;max-width:400px;margin:0 auto;}}
 
 
-/* ── CTA ── */
+/* ── CTA / WAITLIST ── */
 .cta{padding:120px 28px;position:relative;overflow:hidden;}
 .cta::before{
   content:'';position:absolute;inset:0;pointer-events:none;
@@ -400,6 +400,55 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 }
 .cta-sub{font-size:16px;color:var(--muted);margin-bottom:40px;line-height:1.7;}
 .cta-buttons{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+
+/* Waitlist form */
+.waitlist-form{
+  display:flex;gap:10px;max-width:460px;margin:0 auto 20px;
+}
+.waitlist-input{
+  flex:1;padding:14px 20px;border-radius:12px;
+  background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);font-size:15px;font-family:'DM Sans',sans-serif;
+  outline:none;transition:border-color .3s;
+}
+.waitlist-input::placeholder{color:var(--muted);}
+.waitlist-input:focus{border-color:var(--accent);}
+.waitlist-btn{
+  padding:14px 28px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),#8b7cf7);color:#fff;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;
+  letter-spacing:.3px;transition:all .3s;
+  box-shadow:0 4px 20px var(--accent-glow);white-space:nowrap;
+}
+.waitlist-btn:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow);}
+.waitlist-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+.waitlist-msg{
+  font-size:13px;margin-top:8px;min-height:20px;
+}
+.waitlist-msg.error{color:var(--red);}
+.waitlist-msg.success{color:var(--green);}
+.waitlist-count{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:14px;color:var(--muted);margin-top:16px;
+}
+.waitlist-count .count-num{
+  font-family:'Outfit',sans-serif;font-weight:700;color:var(--green);
+}
+.waitlist-success{display:none;animation:fadeUp .5s ease both;}
+.waitlist-success .success-icon{
+  width:64px;height:64px;border-radius:50%;
+  background:rgba(0,229,160,.1);border:2px solid rgba(0,229,160,.3);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;font-size:28px;
+}
+.waitlist-success h3{
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:22px;margin-bottom:8px;
+}
+.waitlist-success p{color:var(--muted);font-size:14px;}
+@media(max-width:500px){
+  .waitlist-form{flex-direction:column;}
+  .waitlist-btn{width:100%;}
+}
 
 /* ── FOOTER ── */
 footer{
@@ -697,28 +746,30 @@ footer{
   </div>
 </section>
 
-<!-- CTA -->
+<!-- CTA / WAITLIST -->
 <section class="cta" id="download">
   <div class="cta-inner">
-    <h2 class="cta-title reveal">Begin vandaag met<br/><span style="background:linear-gradient(135deg,var(--green),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">besparen</span></h2>
-    <p class="cta-sub reveal">Gratis te downloaden. Geen advertenties. Gewoon de beste deals, elke week.</p>
-    <div class="cta-buttons reveal">
-      <!-- TODO: Replace with actual App Store URL once approved -->
-      <a href="https://apps.apple.com/nl/app/shopbaas" class="btn-app">
-        <span class="btn-app-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg></span>
-        <span class="btn-app-text">
-          <small>Download in de</small>
-          <strong>App Store</strong>
-        </span>
-      </a>
-      <!-- TODO: Replace with actual Google Play URL once approved -->
-      <a href="https://play.google.com/store/apps/details?id=com.shopbaas" class="btn-app">
-        <span class="btn-app-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92z" fill="#4285F4"/><path d="M17.556 8.236L5.097.917C4.674.67 4.203.605 3.77.723l10.023 10.023 3.763-2.51z" fill="#EA4335"/><path d="M17.556 15.764l-3.763-2.51L3.77 23.277c.433.118.904.053 1.327-.194l12.459-7.319z" fill="#34A853"/><path d="M20.994 12c0-.574-.257-1.14-.776-1.448l-2.662-1.316-3.763 2.51 3.763 2.51 2.662-1.316c.52-.307.776-.786.776-1.94z" fill="#FBBC05"/></svg></span>
-        <span class="btn-app-text">
-          <small>Beschikbaar op</small>
-          <strong>Google Play</strong>
-        </span>
-      </a>
+    <div id="waitlistForm">
+      <h2 class="cta-title reveal">Wees er als eerste bij<br/><span style="background:linear-gradient(135deg,var(--green),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">en bespaar</span></h2>
+      <p class="cta-sub reveal">De app komt eraan! Meld je aan en ontvang als eerste de download link. Geen spam, beloofd.</p>
+      <div class="waitlist-form reveal">
+        <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="jouw@email.nl" autocomplete="email" required/>
+        <button class="waitlist-btn" id="waitlistBtn" onclick="submitWaitlist()">Aanmelden</button>
+      </div>
+      <div class="waitlist-msg" id="waitlistMsg"></div>
+      <div class="waitlist-count reveal" id="waitlistCount" style="display:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Al <span class="count-num" id="countNum">0</span> mensen aangemeld
+      </div>
+    </div>
+    <div class="waitlist-success" id="waitlistSuccess">
+      <div class="success-icon">&#10003;</div>
+      <h3>Je staat op de lijst!</h3>
+      <p>We sturen je de download link zodra de app beschikbaar is.</p>
+      <div class="waitlist-count" id="waitlistCountSuccess" style="margin-top:20px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Al <span class="count-num" id="countNumSuccess">0</span> mensen aangemeld
+      </div>
     </div>
   </div>
 </section>
@@ -737,7 +788,7 @@ footer{
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, query, where, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, query, where, orderBy, limit, getDocs, addDoc, getCountFromServer, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const app = initializeApp({
   apiKey: "AIzaSyC0S3T-t-Jhl4tyz2b29H55_K76sv9thq0",
@@ -853,6 +904,80 @@ async function loadDeals() {
 }
 
 loadDeals();
+
+// ── WAITLIST ──
+async function loadWaitlistCount() {
+  try {
+    const snap = await getCountFromServer(collection(db, 'waitlist'));
+    const count = snap.data().count;
+    if (count > 0) {
+      document.getElementById('countNum').textContent = count;
+      document.getElementById('countNumSuccess').textContent = count;
+      document.getElementById('waitlistCount').style.display = 'inline-flex';
+    }
+  } catch (e) { /* silent */ }
+}
+
+window.submitWaitlist = async function() {
+  const input = document.getElementById('waitlistEmail');
+  const btn = document.getElementById('waitlistBtn');
+  const msg = document.getElementById('waitlistMsg');
+  const email = input.value.trim().toLowerCase();
+
+  // Basic email validation
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    msg.textContent = 'Vul een geldig e-mailadres in.';
+    msg.className = 'waitlist-msg error';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Even geduld…';
+  msg.textContent = '';
+
+  try {
+    // Check for duplicate
+    const q = query(collection(db, 'waitlist'), where('email', '==', email));
+    const existing = await getDocs(q);
+    if (!existing.empty) {
+      msg.textContent = 'Dit e-mailadres staat al op de lijst!';
+      msg.className = 'waitlist-msg error';
+      btn.disabled = false;
+      btn.textContent = 'Aanmelden';
+      return;
+    }
+
+    // Add to waitlist
+    await addDoc(collection(db, 'waitlist'), {
+      email: email,
+      createdAt: Timestamp.now(),
+    });
+
+    // Show success
+    document.getElementById('waitlistForm').style.display = 'none';
+    const success = document.getElementById('waitlistSuccess');
+    success.style.display = 'block';
+
+    // Update count
+    const snap = await getCountFromServer(collection(db, 'waitlist'));
+    const count = snap.data().count;
+    document.getElementById('countNumSuccess').textContent = count;
+
+  } catch (err) {
+    console.error('Waitlist error:', err);
+    msg.textContent = 'Er ging iets mis. Probeer het opnieuw.';
+    msg.className = 'waitlist-msg error';
+    btn.disabled = false;
+    btn.textContent = 'Aanmelden';
+  }
+};
+
+// Allow Enter key to submit
+document.getElementById('waitlistEmail')?.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') window.submitWaitlist();
+});
+
+loadWaitlistCount();
 </script>
 
 <script>
