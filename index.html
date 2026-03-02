@@ -497,6 +497,56 @@ footer{
 .footer-links a:hover{color:var(--accent2);}
 .footer-text{font-size:13px;color:var(--muted);}
 
+/* ── HERO SOCIAL PROOF ── */
+.hero-social{
+  display:flex;align-items:center;gap:14px;
+  margin-top:28px;
+  animation:fadeUp .8s .4s ease both;
+}
+.hero-avatars{
+  display:flex;align-items:center;
+}
+.hero-avatar{
+  width:32px;height:32px;border-radius:50%;
+  border:2px solid var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:#fff;
+  margin-left:-8px;
+  position:relative;
+}
+.hero-avatar:first-child{margin-left:0;}
+.hero-social-info{display:flex;flex-direction:column;gap:4px;}
+.hero-social-count{
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;
+  display:flex;align-items:center;gap:6px;
+}
+.hero-social-count .count-up{
+  color:var(--green);font-size:17px;font-weight:800;
+  min-width:28px;
+}
+.hero-social-bar{
+  width:140px;height:5px;border-radius:99px;
+  background:var(--surface2);overflow:hidden;
+  position:relative;
+}
+.hero-social-fill{
+  height:100%;border-radius:99px;
+  background:linear-gradient(90deg,var(--green),var(--accent2));
+  width:0%;transition:width 1.8s cubic-bezier(.16,1,.3,1);
+}
+.hero-social-sub{
+  font-size:11px;color:var(--muted);font-weight:500;
+  display:flex;align-items:center;gap:4px;
+}
+.hero-social-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);
+  animation:pulse 2s infinite;
+}
+@media(max-width:900px){
+  .hero-social{justify-content:center;}
+}
+
 /* ── ANIMATIONS ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 @keyframes slideIn{from{opacity:0;transform:translateX(-20px);}to{opacity:1;transform:translateX(0);}}
@@ -557,6 +607,29 @@ footer{
       <div class="og-badge" style="margin-top:20px;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         Alleen voor de eerste 500 — lock de Early Bird-prijs voor altijd
+      </div>
+      <!-- Social proof counter -->
+      <div class="hero-social" id="heroSocial" style="display:none;">
+        <div class="hero-avatars">
+          <div class="hero-avatar" style="background:#6c5ce7;">Y</div>
+          <div class="hero-avatar" style="background:#00e5a0;">M</div>
+          <div class="hero-avatar" style="background:#ff9f43;">S</div>
+          <div class="hero-avatar" style="background:#a29bfe;">J</div>
+          <div class="hero-avatar" style="background:#ff6b6b;">A</div>
+        </div>
+        <div class="hero-social-info">
+          <div class="hero-social-count">
+            <span class="count-up" id="heroCount">0</span>
+            <span>/ 500 Early Birds</span>
+          </div>
+          <div class="hero-social-bar">
+            <div class="hero-social-fill" id="heroFill"></div>
+          </div>
+          <div class="hero-social-sub">
+            <span class="hero-social-dot"></span>
+            Melden zich nu aan
+          </div>
+        </div>
       </div>
     </div>
     <div class="hero-visual">
@@ -936,6 +1009,18 @@ async function loadDeals() {
 loadDeals();
 
 // ── WAITLIST ──
+function animateCount(el, target, duration) {
+  const start = performance.now();
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    // ease-out cubic for a satisfying deceleration
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = Math.round(eased * target);
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 async function loadWaitlistCount() {
   try {
     const snap = await getDoc(doc(db, 'stats', 'waitlist'));
@@ -945,6 +1030,19 @@ async function loadWaitlistCount() {
       document.getElementById('countNum').textContent = display;
       document.getElementById('countNumSuccess').textContent = display;
       document.getElementById('waitlistCount').style.display = 'inline-flex';
+
+      // Hero animated counter
+      const heroEl = document.getElementById('heroSocial');
+      const heroCount = document.getElementById('heroCount');
+      const heroFill = document.getElementById('heroFill');
+      if (heroEl && heroCount) {
+        heroEl.style.display = 'flex';
+        // Start count-up after a small delay for dramatic effect
+        setTimeout(() => {
+          animateCount(heroCount, display, 1600);
+          if (heroFill) heroFill.style.width = Math.min((display / 500) * 100, 100) + '%';
+        }, 600);
+      }
     }
     // Early Bird spots full — hide form, show sold-out message
     if (count >= 500) {
