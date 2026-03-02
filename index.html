@@ -804,7 +804,7 @@ footer{
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, query, where, orderBy, limit, getDocs, addDoc, getCountFromServer, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, query, where, orderBy, limit, getDocs, addDoc, doc, getDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const app = initializeApp({
   apiKey: "AIzaSyC0S3T-t-Jhl4tyz2b29H55_K76sv9thq0",
@@ -926,8 +926,8 @@ loadDeals();
 // ── WAITLIST ──
 async function loadWaitlistCount() {
   try {
-    const snap = await getCountFromServer(collection(db, 'waitlist'));
-    const count = snap.data().count;
+    const snap = await getDoc(doc(db, 'stats', 'waitlist'));
+    const count = snap.exists() ? snap.data().count || 0 : 0;
     if (count > 0) {
       document.getElementById('countNum').textContent = count;
       document.getElementById('countNumSuccess').textContent = count;
@@ -965,11 +965,10 @@ window.submitWaitlist = async function() {
     const success = document.getElementById('waitlistSuccess');
     success.style.display = 'block';
 
-    // Update count
+    // Update count (will reflect after Cloud Function increments)
     try {
-      const snap = await getCountFromServer(collection(db, 'waitlist'));
-      const count = snap.data().count;
-      document.getElementById('countNumSuccess').textContent = count;
+      const countNum = parseInt(document.getElementById('countNum').textContent || '0');
+      document.getElementById('countNumSuccess').textContent = countNum + 1;
     } catch (_) { /* count is non-critical */ }
 
   } catch (err) {
