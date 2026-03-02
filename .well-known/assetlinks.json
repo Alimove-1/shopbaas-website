@@ -4,7 +4,7 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.shopbaas.app",
-      "sha256_cert_fingerprints": ["SHA256_FINGERPRINT"]
+      "sha256_cert_fingerprints": ["BC:BA:10:DC:96:D6:90:9C:ED:68:96:86:19:EC:FC:43:D3:13:F9:B4:F0:50:AA:00:20:8D:F9:D5:42:41:2B:AA"]
     }
   }
 ]
