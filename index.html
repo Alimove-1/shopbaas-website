@@ -16,7 +16,13 @@
 <meta name="twitter:description" content="Vergelijk supermarkt aanbiedingen. Gratis app, geen advertenties."/>
 <meta name="twitter:image" content="https://shopbaas-site.web.app/og-cover.png?v=2"/>
 <meta name="theme-color" content="#06080d"/>
-<script>if('scrollRestoration' in history)history.scrollRestoration='manual';window.scrollTo(0,0);</script>
+<script>
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+window.scrollTo(0,0);
+// Strip hash on fresh load so browser doesn't auto-scroll to #download etc.
+if(location.hash && !document.referrer){history.replaceState(null,'',location.pathname+location.search);}
+window.addEventListener('load',function(){window.scrollTo(0,0);});
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
 <style>
@@ -202,10 +208,12 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 .float-tag.t1{top:60px;right:-60px;animation-delay:0s;}
 .float-tag.t2{bottom:120px;left:-70px;animation-delay:1.5s;}
 .float-tag.t3{bottom:40px;right:-50px;animation-delay:3s;}
+.float-tag.t4{top:140px;left:-65px;animation-delay:4.5s;}
 .float-tag .tag-icon{margin-right:6px;}
 .float-tag .tag-green{color:var(--green);}
 .float-tag .tag-orange{color:var(--orange);}
 .float-tag .tag-accent{color:var(--accent2);}
+.float-tag .tag-purple{color:#a78bfa;}
 
 
 /* ── FEATURES ── */
@@ -566,7 +574,10 @@ footer{
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span class="tag-orange">50% korting</span>
         </div>
         <div class="float-tag t3">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="tag-accent">140 deals</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="tag-accent">500+ deals</span>
+        </div>
+        <div class="float-tag t4">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="tag-purple">Community</span>
         </div>
       </div>
     </div>
@@ -930,9 +941,22 @@ async function loadWaitlistCount() {
     const snap = await getDoc(doc(db, 'stats', 'waitlist'));
     const count = snap.exists() ? snap.data().count || 0 : 0;
     if (count > 0) {
-      document.getElementById('countNum').textContent = count;
-      document.getElementById('countNumSuccess').textContent = count;
+      const display = Math.min(count, 500);
+      document.getElementById('countNum').textContent = display;
+      document.getElementById('countNumSuccess').textContent = display;
       document.getElementById('waitlistCount').style.display = 'inline-flex';
+    }
+    // Early Bird spots full — hide form, show sold-out message
+    if (count >= 500) {
+      document.getElementById('waitlistForm').innerHTML =
+        '<h2 class="cta-title">Early Bird is vol!</h2>' +
+        '<p class="cta-sub">Alle 500 Early Bird plekken zijn bezet. Laat je e-mail achter om op de wachtlijst te komen voor de reguliere lancering.</p>' +
+        '<div class="waitlist-form"><input type="email" class="waitlist-input" id="waitlistEmail" placeholder="jouw@email.nl" autocomplete="email" required/>' +
+        '<button class="waitlist-btn" id="waitlistBtn" onclick="submitWaitlist()">Op de wachtlijst</button></div>' +
+        '<div class="waitlist-msg" id="waitlistMsg"></div>' +
+        '<div class="waitlist-count" style="display:inline-flex;">' +
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>' +
+        '500 / 500 Early Bird plekken bezet — Vol!</div>';
     }
   } catch (e) { /* silent */ }
 }
