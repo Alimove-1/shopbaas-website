@@ -383,6 +383,29 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
   box-shadow:0 4px 20px var(--accent-glow);border:none;
 }
 .pricing-btn-pro:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow);}
+.og-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,rgba(255,159,67,.12),rgba(255,107,107,.12));
+  border:1px solid rgba(255,159,67,.25);
+  border-radius:8px;padding:6px 14px;margin-top:12px;
+  font-size:12px;font-weight:600;color:var(--orange);
+}
+.og-badge svg{flex-shrink:0;}
+.og-lock{
+  text-align:center;margin-top:16px;
+  font-size:13px;color:var(--orange);font-weight:600;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+}
+.og-perks{
+  display:flex;flex-direction:column;gap:8px;
+  margin-top:16px;padding:16px;
+  background:rgba(255,159,67,.06);border:1px solid rgba(255,159,67,.15);
+  border-radius:12px;
+}
+.og-perk{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--orange);font-weight:500;
+}
 @media(max-width:700px){.pricing-cards{grid-template-columns:1fr;max-width:400px;margin:0 auto;}}
 
 
@@ -522,6 +545,10 @@ footer{
         <a href="#download" class="nav-cta" style="padding:16px 40px;font-size:16px;display:inline-block;text-decoration:none;">Meld je gratis aan</a>
         <span style="color:var(--muted);font-size:13px;margin-left:8px;">Binnenkort op iOS & Android</span>
       </div>
+      <div class="og-badge" style="margin-top:20px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Early adopters krijgen de OG-prijs voor altijd + exclusieve badge
+      </div>
     </div>
     <div class="hero-visual">
       <div class="phone-mockup">
@@ -636,7 +663,7 @@ footer{
   <div class="pricing-inner">
     <div class="section-label reveal">✦ Abonnementen</div>
     <h2 class="section-title reveal" style="text-align:center;">Kies je plan</h2>
-    <p class="section-sub reveal" style="text-align:center;margin:0 auto 60px;">Start gratis en bespaar direct. Upgrade wanneer je meer wilt.</p>
+    <p class="section-sub reveal" style="text-align:center;margin:0 auto 60px;">Start gratis en bespaar direct. Early adopters locken de OG-prijs voor altijd.</p>
 
     <div class="pricing-cards">
       <div class="pricing-card reveal">
@@ -679,11 +706,15 @@ footer{
       </div>
 
       <div class="pricing-card pro reveal">
-        <div class="pricing-popular">Populair</div>
+        <div class="pricing-popular" style="background:linear-gradient(135deg,var(--orange),#ff6b6b);">OG Deal</div>
         <div class="pricing-card-header">
           <div class="pricing-plan-name">Pro</div>
           <div class="pricing-price">€3<span class="pricing-decimal">,99</span></div>
           <div class="pricing-period">per maand</div>
+          <div class="og-lock">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Deze prijs voor altijd als early adopter
+          </div>
         </div>
         <div class="pricing-features">
           <div class="pricing-feature">
@@ -715,7 +746,17 @@ footer{
             Duitse deals (DE)
           </div>
         </div>
-        <a href="#download" class="pricing-btn pricing-btn-pro">Aanmelden & later upgraden</a>
+        <div class="og-perks">
+          <div class="og-perk">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            OG-badge op je profiel
+          </div>
+          <div class="og-perk">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Prijs gelockt — nooit meer betalen
+          </div>
+        </div>
+        <a href="#download" class="pricing-btn pricing-btn-pro" style="margin-top:20px;">Aanmelden als early adopter</a>
       </div>
     </div>
   </div>
@@ -725,8 +766,8 @@ footer{
 <section class="cta" id="download">
   <div class="cta-inner">
     <div id="waitlistForm">
-      <h2 class="cta-title reveal">Wees er als eerste bij<br/><span style="background:linear-gradient(135deg,var(--green),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">en bespaar</span></h2>
-      <p class="cta-sub reveal">De app komt binnenkort naar iOS en Android. Meld je aan en ontvang als eerste de download link. Geen spam, beloofd.</p>
+      <h2 class="cta-title reveal">Word early adopter<br/><span style="background:linear-gradient(135deg,var(--orange),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">en lock je OG-prijs</span></h2>
+      <p class="cta-sub reveal">Meld je nu aan en ontvang als eerste de app. Early adopters krijgen de OG-prijs voor altijd + een exclusieve badge op hun profiel.</p>
       <div class="waitlist-form reveal">
         <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="jouw@email.nl" autocomplete="email" required/>
         <button class="waitlist-btn" id="waitlistBtn" onclick="submitWaitlist()">Aanmelden</button>
@@ -739,8 +780,8 @@ footer{
     </div>
     <div class="waitlist-success" id="waitlistSuccess">
       <div class="success-icon">&#10003;</div>
-      <h3>Je staat op de lijst!</h3>
-      <p>We sturen je de download link zodra de app beschikbaar is.</p>
+      <h3>Je bent erbij als OG!</h3>
+      <p>We sturen je de download link zodra de app beschikbaar is. Jouw OG-prijs en badge liggen klaar.</p>
       <div class="waitlist-count" id="waitlistCountSuccess" style="margin-top:20px;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         Al <span class="count-num" id="countNumSuccess">0</span> mensen aangemeld
