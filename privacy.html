@@ -4,6 +4,9 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ShopBaas — Privacybeleid</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
@@ -31,28 +34,45 @@ a{color:var(--accent2);}
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">ShopBaas</a>
-    <a href="/" class="nav-back">← Terug naar home</a>
+    <a href="/" class="nav-back">&larr; Terug naar home</a>
   </div>
 </nav>
 
 <main>
 <h1>Privacybeleid</h1>
-<div class="last-updated">Laatst bijgewerkt: 27 februari 2026</div>
+<div class="last-updated">Laatst bijgewerkt: 5 maart 2026</div>
 
-<h2>1. Inleiding</h2>
-<p>ShopBaas ("wij", "ons", "onze") respecteert je privacy. Dit privacybeleid legt uit welke gegevens wij verzamelen, hoe wij deze gebruiken en welke rechten je hebt met betrekking tot je persoonlijke gegevens wanneer je de ShopBaas-app en website gebruikt.</p>
+<h2>1. Verantwoordelijke</h2>
+<p>ShopBaas is een dienst van:</p>
+<p>
+  <strong>Laurie Bathoorn</strong> (Eenmanszaak)<br/>
+  Enschedesestraat 94<br/>
+  7551 EP Hengelo<br/>
+  KvK-nummer: 87199157<br/>
+  E-mail: <a href="mailto:info@shopbaas.nl">info@shopbaas.nl</a>
+</p>
 
 <h2>2. Welke gegevens verzamelen wij</h2>
 <p>Wij verzamelen de volgende categorieën gegevens:</p>
 <ul>
-  <li><strong>Accountgegevens:</strong> Wanneer je een account aanmaakt, verzamelen wij je e-mailadres en weergavenaam.</li>
-  <li><strong>Gebruiksgegevens:</strong> Informatie over hoe je de app gebruikt, zoals bekeken deals, opgeslagen favorieten en ingestelde watchlist-items.</li>
+  <li><strong>Accountgegevens:</strong> E-mailadres, weergavenaam en gebruikers-ID (Firebase UID) bij het aanmaken van een account.</li>
+  <li><strong>Gebruiksgegevens:</strong> Bekeken deals, opgeslagen favorieten, ingestelde watchlist-items en bevestigde besparingen.</li>
   <li><strong>Community-berichten:</strong> Berichten die je plaatst in de community-kanalen zijn zichtbaar voor andere gebruikers.</li>
-  <li><strong>Abonnementsgegevens:</strong> Wanneer je een Pro-abonnement afsluit, wordt de betaling verwerkt via Apple App Store of Google Play Store. Wij ontvangen geen creditcard- of betaalgegevens.</li>
-  <li><strong>Apparaatgegevens:</strong> Beperkte technische informatie zoals apparaattype en besturingssysteem voor het verbeteren van de app.</li>
+  <li><strong>Abonnementsgegevens:</strong> Abonnementsstatus (actief/verlopen) via RevenueCat. Wij ontvangen geen creditcard- of betaalgegevens.</li>
+  <li><strong>Push-notificatietokens:</strong> Wanneer je meldingen inschakelt, slaan wij je apparaat-token op om je notificaties te kunnen sturen.</li>
+  <li><strong>Apparaatgegevens:</strong> Apparaattype, besturingssysteem en app-versie voor het verbeteren van de app.</li>
+  <li><strong>Wachtlijstgegevens:</strong> E-mailadres bij aanmelding op de wachtlijst via de website.</li>
 </ul>
 
-<h2>3. Hoe gebruiken wij je gegevens</h2>
+<h2>3. Grondslag voor verwerking</h2>
+<p>Wij verwerken je gegevens op basis van de volgende rechtsgronden (AVG artikel 6):</p>
+<ul>
+  <li><strong>Uitvoering van de overeenkomst:</strong> Het leveren van de ShopBaas-dienst, het beheren van je account en abonnement.</li>
+  <li><strong>Gerechtvaardigd belang:</strong> Het verbeteren van de app, het oplossen van technische problemen en het modereren van de community.</li>
+  <li><strong>Toestemming:</strong> Het versturen van push-notificaties (je kunt dit op elk moment intrekken via je apparaatinstellingen).</li>
+</ul>
+
+<h2>4. Hoe gebruiken wij je gegevens</h2>
 <p>Wij gebruiken je gegevens voor de volgende doeleinden:</p>
 <ul>
   <li>Het leveren en verbeteren van de ShopBaas-dienst</li>
@@ -63,45 +83,60 @@ a{color:var(--accent2);}
   <li>Het oplossen van technische problemen</li>
 </ul>
 
-<h2>4. Delen van gegevens</h2>
+<h2>5. Delen van gegevens</h2>
 <p>Wij verkopen je persoonlijke gegevens niet aan derden. Wij delen gegevens uitsluitend met:</p>
 <ul>
-  <li><strong>Firebase (Google):</strong> Voor authenticatie, database-opslag en app-hosting.</li>
-  <li><strong>RevenueCat:</strong> Voor het beheren van in-app abonnementen.</li>
+  <li><strong>Firebase (Google):</strong> Voor authenticatie, database-opslag, push-notificaties en app-hosting. Google verwerkt data conform hun <a href="https://firebase.google.com/support/privacy" target="_blank">privacybeleid</a>.</li>
+  <li><strong>RevenueCat:</strong> Voor het beheren van in-app abonnementen. RevenueCat ontvangt je gebruikers-ID en abonnementsstatus.</li>
   <li><strong>Apple / Google:</strong> Voor betalingsverwerking van abonnementen via hun respectieve app stores.</li>
+  <li><strong>Expo (push-notificaties):</strong> Voor het versturen van push-notificaties naar je apparaat.</li>
 </ul>
 
-<h2>5. Gegevensopslag en beveiliging</h2>
-<p>Je gegevens worden opgeslagen via Google Firebase, dat gebruikmaakt van beveiligde servers binnen de Europese Unie. Wij nemen redelijke technische en organisatorische maatregelen om je gegevens te beschermen tegen ongeoorloofde toegang, verlies of misbruik.</p>
+<h2>6. Internationale doorgifte</h2>
+<p>Je gegevens worden verwerkt door Firebase (Google) op servers binnen de EU. Sommige subdiensten van Google en RevenueCat kunnen gegevens verwerken in de Verenigde Staten. Deze partijen zijn gebonden aan EU Standard Contractual Clauses (SCCs) om een passend beschermingsniveau te garanderen.</p>
 
-<h2>6. Je rechten (AVG/GDPR)</h2>
+<h2>7. Gegevensopslag en beveiliging</h2>
+<p>Wij nemen redelijke technische en organisatorische maatregelen om je gegevens te beschermen, waaronder:</p>
+<ul>
+  <li>Encryptie van gegevens tijdens overdracht (TLS/SSL)</li>
+  <li>Firestore beveiligingsregels die ongeautoriseerde toegang blokkeren</li>
+  <li>Server-side validatie van gevoelige velden (zoals abonnementsstatus)</li>
+</ul>
+
+<h2>8. Je rechten (AVG/GDPR)</h2>
 <p>Op grond van de Algemene Verordening Gegevensbescherming (AVG) heb je de volgende rechten:</p>
 <ul>
   <li><strong>Inzage:</strong> Je kunt opvragen welke gegevens wij van je hebben.</li>
   <li><strong>Rectificatie:</strong> Je kunt onjuiste gegevens laten corrigeren.</li>
   <li><strong>Verwijdering:</strong> Je kunt verzoeken om verwijdering van je gegevens.</li>
   <li><strong>Bezwaar:</strong> Je kunt bezwaar maken tegen bepaalde verwerkingen.</li>
+  <li><strong>Beperking:</strong> Je kunt vragen om beperking van de verwerking.</li>
   <li><strong>Overdraagbaarheid:</strong> Je kunt een kopie van je gegevens opvragen in een gangbaar formaat.</li>
 </ul>
-<p>Om een van deze rechten uit te oefenen, neem contact met ons op via het e-mailadres onderaan dit document.</p>
+<p>Om een van deze rechten uit te oefenen, neem contact met ons op via <a href="mailto:info@shopbaas.nl">info@shopbaas.nl</a>. Wij reageren binnen 30 dagen op je verzoek. Je hebt ook het recht om een klacht in te dienen bij de Autoriteit Persoonsgegevens (<a href="https://autoriteitpersoonsgegevens.nl" target="_blank">autoriteitpersoonsgegevens.nl</a>).</p>
 
-<h2>7. Bewaartermijn</h2>
+<h2>9. Bewaartermijn</h2>
 <p>Wij bewaren je gegevens zolang je een actief account hebt. Wanneer je je account verwijdert, worden je persoonlijke gegevens binnen 30 dagen verwijderd. Community-berichten kunnen geanonimiseerd worden bewaard.</p>
 
-<h2>8. Kinderen</h2>
+<h2>10. Kinderen</h2>
 <p>ShopBaas is niet gericht op kinderen onder de 16 jaar. Wij verzamelen niet bewust gegevens van kinderen. Als je vermoedt dat een kind gegevens aan ons heeft verstrekt, neem dan contact met ons op zodat wij deze kunnen verwijderen.</p>
 
-<h2>9. Cookies en tracking</h2>
-<p>De ShopBaas-website en app gebruiken geen tracking-cookies of advertentie-trackers. Wij gebruiken alleen functionele opslag die noodzakelijk is voor het functioneren van de dienst.</p>
+<h2>11. Cookies en tracking</h2>
+<p>De ShopBaas-app en website gebruiken geen tracking-cookies of advertentie-trackers. De website laadt lettertypen van Google Fonts, waarbij je IP-adres naar Google wordt verstuurd. Wij gebruiken geen analytics-diensten.</p>
 
-<h2>10. Wijzigingen</h2>
+<h2>12. Wijzigingen</h2>
 <p>Wij kunnen dit privacybeleid van tijd tot tijd bijwerken. Wijzigingen worden op deze pagina gepubliceerd met een bijgewerkte datum. Bij significante wijzigingen informeren wij je via de app.</p>
 
-<h2>11. Contact</h2>
+<h2>13. Contact</h2>
 <p>Heb je vragen over dit privacybeleid of wil je je rechten uitoefenen? Neem contact met ons op:</p>
-<p><strong>E-mail:</strong> privacy@shopbaas.nl</p>
+<p>
+  <strong>Laurie Bathoorn</strong><br/>
+  Enschedesestraat 94, 7551 EP Hengelo<br/>
+  KvK: 87199157<br/>
+  E-mail: <a href="mailto:info@shopbaas.nl">info@shopbaas.nl</a>
+</p>
 
-<div class="footer-legal">© 2026 ShopBaas. Alle rechten voorbehouden.</div>
+<div class="footer-legal">&copy; 2026 ShopBaas — Laurie Bathoorn. Alle rechten voorbehouden.</div>
 </main>
 
 </body>

@@ -4,17 +4,21 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>ShopBaas — Slimmer boodschappen doen</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
 <meta name="description" content="ShopBaas — slimmer boodschappen doen. Vergelijk aanbiedingen van Albert Heijn, Jumbo, Lidl, Etos, Kruidvat en meer. Gratis!"/>
 <meta property="og:title" content="ShopBaas — Slimmer boodschappen doen"/>
 <meta property="og:description" content="Vergelijk supermarkt aanbiedingen van Albert Heijn, Jumbo, Lidl, Etos, Kruidvat en meer. Gratis app, geen advertenties."/>
-<meta property="og:image" content="https://shopbaas-site.web.app/og-cover.png?v=2"/>
-<meta property="og:url" content="https://shopbaas-site.web.app"/>
+<meta property="og:image" content="https://shopbaas.nl/og-cover.png?v=2"/>
+<meta property="og:url" content="https://shopbaas.nl"/>
 <meta property="og:type" content="website"/>
 <meta property="og:locale" content="nl_NL"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="ShopBaas — Slimmer boodschappen doen"/>
 <meta name="twitter:description" content="Vergelijk supermarkt aanbiedingen. Gratis app, geen advertenties."/>
-<meta name="twitter:image" content="https://shopbaas-site.web.app/og-cover.png?v=2"/>
+<meta name="twitter:image" content="https://shopbaas.nl/og-cover.png?v=2"/>
+<link rel="canonical" href="https://shopbaas.nl"/>
 <meta name="theme-color" content="#06080d"/>
 <script>
 if('scrollRestoration' in history)history.scrollRestoration='manual';
@@ -882,14 +886,16 @@ footer{
     <div class="footer-links">
       <a href="privacy.html">Privacybeleid</a>
       <a href="terms.html">Gebruiksvoorwaarden</a>
+      <a href="mailto:info@shopbaas.nl">Contact</a>
     </div>
-    <div class="footer-text">© 2026 ShopBaas. Slimmer boodschappen doen.</div>
+    <div class="footer-text" style="margin-bottom:8px;">Laurie Bathoorn — Enschedesestraat 94, 7551 EP Hengelo — KvK: 87199157</div>
+    <div class="footer-text">&copy; 2026 ShopBaas. Slimmer boodschappen doen.</div>
   </div>
 </footer>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, query, where, orderBy, limit, getDocs, addDoc, doc, getDoc, Timestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, query, where, orderBy, limit, getDocs, addDoc, doc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const app = initializeApp({
   apiKey: "AIzaSyC0S3T-t-Jhl4tyz2b29H55_K76sv9thq0",
@@ -1082,7 +1088,7 @@ window.submitWaitlist = async function() {
     // Add to waitlist (dedup handled server-side in Cloud Function)
     await addDoc(collection(db, 'waitlist'), {
       email: email,
-      createdAt: Timestamp.now(),
+      createdAt: serverTimestamp(),
     });
 
     // Show success
