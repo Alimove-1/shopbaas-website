@@ -27,8 +27,18 @@ window.scrollTo(0,0);
 if(location.hash && !document.referrer){history.replaceState(null,'',location.pathname+location.search);}
 window.addEventListener('load',function(){window.scrollTo(0,0);});
 </script>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<!-- TikTok Pixel Code Start -->
+<script>
+!function (w, d, t) {
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+  ttq.load('D6NC09BC77UBTM3F3TU0');
+  ttq.page();
+}(window, document, 'ttq');
+</script>
+<!-- TikTok Pixel Code End -->
+<link rel="stylesheet" href="/fonts/fonts.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -134,31 +144,36 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 .btn-app-text small{font-size:10px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.5px;}
 .btn-app-text strong{font-size:15px;font-weight:700;}
 
-/* Hero visual — phone mockup */
+/* Hero visual — phone mockup (iPhone style) */
 .hero-visual{display:flex;justify-content:center;animation:fadeUp .8s .2s ease both;}
 .phone-mockup{
   position:relative;width:308px;
-  background:var(--surface);
-  border-radius:36px;
-  border:2px solid rgba(255,255,255,.08);
-  padding:12px;
+  background:#1a1a1a;
+  border-radius:44px;
+  border:3px solid #2a2a2a;
+  padding:10px;
   box-shadow:
     0 40px 80px rgba(0,0,0,.5),
     0 0 60px var(--accent-glow),
-    inset 0 1px 0 rgba(255,255,255,.05);
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 -1px 0 rgba(255,255,255,.02);
   transform:perspective(1000px) rotateY(-5deg) rotateX(2deg);
   transition:transform .5s;
 }
 .phone-mockup:hover{transform:perspective(1000px) rotateY(0deg) rotateX(0deg);}
-.phone-notch{width:120px;height:24px;background:var(--bg);border-radius:0 0 16px 16px;margin:0 auto 8px;position:relative;}
-.phone-notch::after{content:'';width:8px;height:8px;background:var(--surface2);border-radius:50%;position:absolute;right:20px;top:8px;}
+/* Dynamic Island */
+.phone-notch{width:96px;height:28px;background:#000;border-radius:20px;margin:0 auto;position:absolute;top:18px;left:50%;transform:translateX(-50%);z-index:10;}
+.phone-notch::after{display:none;}
+/* Side button accents */
+.phone-mockup::before{content:'';position:absolute;right:-3px;top:130px;width:3px;height:56px;background:#2a2a2a;border-radius:0 2px 2px 0;}
+.phone-mockup::after{content:'';position:absolute;left:-3px;top:100px;width:3px;height:32px;background:#2a2a2a;border-radius:2px 0 0 2px;box-shadow:0 40px 0 #2a2a2a, 0 70px 0 #2a2a2a;}
 .phone-screen{
-  background:var(--bg);border-radius:24px;overflow:hidden;
+  background:#000;border-radius:34px;overflow:hidden;
   position:relative;
 }
 .phone-screenshot{
   width:100%;display:block;
-  border-radius:0 0 24px 24px;
+  border-radius:34px;
 }
 
 /* Fake deal cards inside phone */
@@ -212,7 +227,7 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 .float-tag.t1{top:60px;right:-60px;animation-delay:0s;}
 .float-tag.t2{bottom:120px;left:-70px;animation-delay:1.5s;}
 .float-tag.t3{bottom:40px;right:-50px;animation-delay:3s;}
-.float-tag.t4{top:140px;left:-65px;animation-delay:4.5s;}
+.float-tag.t4{top:200px;left:-90px;animation-delay:4.5s;}
 .float-tag .tag-icon{margin-right:6px;}
 .float-tag .tag-green{color:var(--green);}
 .float-tag .tag-orange{color:var(--orange);}
@@ -566,7 +581,7 @@ footer{
   .hero-content{grid-template-columns:1fr;text-align:center;gap:40px;}
   .hero-sub{margin:0 auto 36px;}
   .hero-buttons{justify-content:center;}
-  .phone-mockup{transform:none;width:286px;}
+  .phone-mockup{transform:none;width:286px;border-radius:40px;}
   .float-tag{display:none;}
   .features-grid{grid-template-columns:1fr;}
   .deals-grid{grid-template-columns:repeat(2,1fr);}
@@ -774,17 +789,21 @@ footer{
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             Filter op korting %
           </div>
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Favorieten opslaan <span style="font-size:11px;color:var(--muted);margin-left:4px;">(max 5)</span>
+          </div>
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Community toegang
+          </div>
           <div class="pricing-feature disabled">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             Product volgen & alerts
           </div>
           <div class="pricing-feature disabled">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Favorieten opslaan
-          </div>
-          <div class="pricing-feature disabled">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Community toegang
+            Besparingen bijhouden
           </div>
           <div class="pricing-feature disabled">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -818,17 +837,25 @@ footer{
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             Filter op korting %
           </div>
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Community toegang
+          </div>
+          <div class="pricing-feature highlight">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Onbeperkt favorieten
+          </div>
           <div class="pricing-feature highlight">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             Product volgen & alerts
           </div>
           <div class="pricing-feature highlight">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Favorieten opslaan
+            Besparingen bijhouden
           </div>
           <div class="pricing-feature highlight">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Community toegang
+            Alle producten per deal
           </div>
           <div class="pricing-feature highlight">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1089,6 +1116,9 @@ window.submitWaitlist = async function() {
       email: email,
       createdAt: serverTimestamp(),
     });
+
+    // Track successful signup for TikTok Ads
+    if (typeof ttq !== 'undefined') ttq.track('CompleteRegistration');
 
     // Show success
     document.getElementById('waitlistForm').style.display = 'none';

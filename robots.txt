@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /deal/
+
+Sitemap: https://shopbaas.nl/sitemap.xml
