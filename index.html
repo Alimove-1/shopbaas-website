@@ -27,17 +27,6 @@ window.scrollTo(0,0);
 if(location.hash && !document.referrer){history.replaceState(null,'',location.pathname+location.search);}
 window.addEventListener('load',function(){window.scrollTo(0,0);});
 </script>
-<!-- TikTok Pixel Code Start -->
-<script>
-!function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-  ttq.load('D6NC09BC77UBTM3F3TU0');
-  ttq.page();
-}(window, document, 'ttq');
-</script>
-<!-- TikTok Pixel Code End -->
 <link rel="stylesheet" href="/fonts/fonts.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -615,13 +604,19 @@ footer{
     <div class="hero-text">
       <div class="hero-badge">
         <span class="hero-badge-dot"></span>
-        Binnenkort beschikbaar — Meld je gratis aan
+        Nu beschikbaar — Download gratis
       </div>
       <h1 class="hero-title">Slimmer<br/>boodschappen<br/><span>doen.</span></h1>
       <p class="hero-sub">Vergelijk aanbiedingen van Albert Heijn, Jumbo, Lidl, Etos, Kruidvat en meer in één overzicht. Filter op korting en bespaar tot €40 per week.</p>
       <div class="hero-buttons">
-        <a href="#download" class="nav-cta" style="padding:16px 40px;font-size:16px;display:inline-block;text-decoration:none;">Meld je gratis aan</a>
-        <span style="color:var(--muted);font-size:13px;margin-left:8px;">Binnenkort op iOS & Android</span>
+        <a href="https://apps.apple.com/app/shopbaas/id6760038638" class="btn-app" target="_blank" rel="noopener noreferrer">
+          <span class="btn-app-icon">&#63743;</span>
+          <span class="btn-app-text"><small>Download op de</small><strong>App Store</strong></span>
+        </a>
+        <a href="#download" class="btn-app" style="opacity:.7;cursor:default;">
+          <span class="btn-app-icon">&#9654;</span>
+          <span class="btn-app-text"><small>Binnenkort op</small><strong>Google Play</strong></span>
+        </a>
       </div>
       <div class="og-badge" style="margin-top:20px;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -715,7 +710,7 @@ footer{
         </div>
         <h3>Favorieten</h3>
         <p>Goede deal gezien maar nog niet klaar om te shoppen? Sla 'm op met één tap en bekijk later je persoonlijke deal-lijst.</p>
-        <span class="feature-tag pro">Pro</span>
+        <span class="feature-tag free">Gratis (max 5)</span>
       </div>
       <div class="feature-card reveal">
         <div class="feature-icon green">
@@ -723,7 +718,7 @@ footer{
         </div>
         <h3>Community</h3>
         <p>Ontdek hidden deals die anderen spotten. Deel tips per winkel en bespaar samen met duizenden slimme shoppers.</p>
-        <span class="feature-tag pro">Pro</span>
+        <span class="feature-tag free">Gratis lezen</span>
       </div>
 
       <div class="feature-card reveal">
@@ -1117,7 +1112,7 @@ window.submitWaitlist = async function() {
       createdAt: serverTimestamp(),
     });
 
-    // Track successful signup for TikTok Ads
+    // Track successful signup for TikTok Ads (only if consent was given)
     if (typeof ttq !== 'undefined') ttq.track('CompleteRegistration');
 
     // Show success
@@ -1165,5 +1160,6 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
+<script src="/cookie-consent.js"></script>
 </body>
 </html>

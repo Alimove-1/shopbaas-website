@@ -7,17 +7,6 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
-<!-- TikTok Pixel Code Start -->
-<script>
-!function (w, d, t) {
-  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
-var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
-;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
-  ttq.load('D6NC09BC77UBTM3F3TU0');
-  ttq.page();
-}(window, document, 'ttq');
-</script>
-<!-- TikTok Pixel Code End -->
 <link rel="stylesheet" href="/fonts/fonts.css"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -96,7 +85,7 @@ a{color:var(--accent2);}
 <h2>5. Delen van gegevens</h2>
 <p>Wij verkopen je persoonlijke gegevens niet aan derden. Wij delen gegevens uitsluitend met:</p>
 <ul>
-  <li><strong>Firebase (Google):</strong> Voor authenticatie, database-opslag, push-notificaties en app-hosting. Google verwerkt data conform hun <a href="https://firebase.google.com/support/privacy" target="_blank">privacybeleid</a>.</li>
+  <li><strong>Firebase (Google):</strong> Voor authenticatie, database-opslag, push-notificaties en app-hosting. Google verwerkt data conform hun <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">privacybeleid</a>.</li>
   <li><strong>RevenueCat:</strong> Voor het beheren van in-app abonnementen. RevenueCat ontvangt je gebruikers-ID en abonnementsstatus.</li>
   <li><strong>Apple / Google:</strong> Voor betalingsverwerking van abonnementen via hun respectieve app stores.</li>
   <li><strong>Expo (push-notificaties):</strong> Voor het versturen van push-notificaties naar je apparaat.</li>
@@ -123,7 +112,7 @@ a{color:var(--accent2);}
   <li><strong>Beperking:</strong> Je kunt vragen om beperking van de verwerking.</li>
   <li><strong>Overdraagbaarheid:</strong> Je kunt een kopie van je gegevens opvragen in een gangbaar formaat.</li>
 </ul>
-<p>Om een van deze rechten uit te oefenen, neem contact met ons op via <a href="mailto:info@shopbaas.nl">info@shopbaas.nl</a>. Wij reageren binnen 30 dagen op je verzoek. Je hebt ook het recht om een klacht in te dienen bij de Autoriteit Persoonsgegevens (<a href="https://autoriteitpersoonsgegevens.nl" target="_blank">autoriteitpersoonsgegevens.nl</a>).</p>
+<p>Om een van deze rechten uit te oefenen, neem contact met ons op via <a href="mailto:info@shopbaas.nl">info@shopbaas.nl</a>. Wij reageren binnen 30 dagen op je verzoek. Je hebt ook het recht om een klacht in te dienen bij de Autoriteit Persoonsgegevens (<a href="https://autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener noreferrer">autoriteitpersoonsgegevens.nl</a>).</p>
 
 <h2>9. Bewaartermijn</h2>
 <p>Wij bewaren je gegevens zolang je een actief account hebt. Wanneer je je account verwijdert, worden je persoonlijke gegevens binnen 30 dagen verwijderd. Community-berichten kunnen geanonimiseerd worden bewaard.</p>
@@ -132,7 +121,9 @@ a{color:var(--accent2);}
 <p>ShopBaas is niet gericht op kinderen onder de 16 jaar. Wij verzamelen niet bewust gegevens van kinderen. Als je vermoedt dat een kind gegevens aan ons heeft verstrekt, neem dan contact met ons op zodat wij deze kunnen verwijderen.</p>
 
 <h2>11. Cookies en tracking</h2>
-<p>De ShopBaas-app en website gebruiken geen tracking-cookies of advertentie-trackers. De website laadt lettertypen van Google Fonts, waarbij je IP-adres naar Google wordt verstuurd. Wij gebruiken geen analytics-diensten.</p>
+<p>De ShopBaas-app gebruikt geen tracking-cookies of advertentie-trackers.</p>
+<p>Op de ShopBaas-website gebruiken we de <strong>TikTok Pixel</strong> voor het meten van advertentieresultaten. Deze wordt alleen geladen nadat je hier expliciet toestemming voor geeft via de cookiebanner. Je kunt je keuze op elk moment wijzigen door je browsergegevens te wissen. Zonder toestemming worden er geen tracking-cookies geplaatst.</p>
+<p>Lettertypen worden lokaal gehost en er worden geen externe verzoeken naar Google verstuurd.</p>
 
 <h2>12. Wijzigingen</h2>
 <p>Wij kunnen dit privacybeleid van tijd tot tijd bijwerken. Wijzigingen worden op deze pagina gepubliceerd met een bijgewerkte datum. Bij significante wijzigingen informeren wij je via de app.</p>
@@ -149,5 +140,6 @@ a{color:var(--accent2);}
 <div class="footer-legal">&copy; 2026 ShopBaas — Laurie Bathoorn. Alle rechten voorbehouden.</div>
 </main>
 
+<script src="/cookie-consent.js"></script>
 </body>
 </html>
