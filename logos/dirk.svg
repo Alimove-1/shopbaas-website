@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160">
+  <defs>
+    <style>
+      @font-face { font-family: 'Arial Black'; }
+      .dirk-text { font-family: 'Arial Black', 'Arial', sans-serif; font-weight: 900; font-size: 120px; fill: #e30613; letter-spacing: 2px; }
+    </style>
+  </defs>
+  <text x="200" y="122" text-anchor="middle" class="dirk-text">DIRK</text>
+</svg>
