@@ -390,22 +390,50 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
   line-height:1.1;margin-bottom:8px;
 }
 .stat-label{font-size:14px;color:var(--muted);font-weight:500;}
+/* Best deal card */
+.best-deal-card{
+  text-align:center;padding:24px 20px;
+  background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  position:relative;overflow:hidden;
+  animation:pulseGlow 3s ease-in-out infinite;
+}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 0 rgba(108,92,231,0);}50%{box-shadow:0 0 20px rgba(108,92,231,.15);}}
+.best-deal-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;color:var(--muted);margin-bottom:12px;}
+.best-deal-content{min-height:80px;position:relative;}
+.best-deal-item{transition:opacity .4s,transform .4s;}
+.best-deal-item.fade-out{opacity:0;transform:translateY(-8px);}
+.best-deal-store{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:4px;}
+.best-deal-name{font-weight:600;font-size:14px;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;margin:0 auto 6px;}
+.best-deal-pct{
+  font-family:'Outfit',sans-serif;font-weight:900;font-size:36px;
+  background:linear-gradient(135deg,var(--green),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.1;margin-bottom:4px;
+}
+.best-deal-prices{font-size:13px;color:var(--muted);}
+.best-deal-prices .sale{color:var(--green);font-weight:700;}
+.best-deal-prices .orig{text-decoration:line-through;margin-left:6px;}
+
 /* Savings calculator card */
 .savings-calc{text-align:center;padding:28px 20px;background:var(--surface);border:1px solid var(--border);border-radius:20px;transition:border-color .3s;}
 .savings-calc-title{font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;margin-bottom:14px;color:var(--text);}
-.savings-pills{display:flex;gap:8px;justify-content:center;margin-bottom:16px;}
-.savings-pill{
-  padding:8px 16px;border-radius:10px;border:1px solid var(--border);
-  background:transparent;color:var(--muted);cursor:pointer;
-  font-family:'Outfit',sans-serif;font-weight:600;font-size:14px;
-  transition:all .25s;
+.savings-slider-wrap{margin-bottom:16px;}
+.savings-slider-label{
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;color:var(--text);margin-bottom:10px;
 }
-.savings-pill:hover{border-color:rgba(139,92,246,.3);color:var(--text);}
-.savings-pill.active{
+.savings-slider{
+  -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;
+  background:var(--surface2);outline:none;cursor:pointer;
+}
+.savings-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;
   background:linear-gradient(135deg,var(--accent),#8b7cf7);
-  border-color:transparent;color:#fff;
-  box-shadow:0 4px 16px var(--accent-glow);
+  box-shadow:0 2px 10px var(--accent-glow);cursor:pointer;
+  transition:transform .2s,box-shadow .2s;
 }
+.savings-slider::-webkit-slider-thumb:hover{transform:scale(1.15);box-shadow:0 4px 16px var(--accent-glow);}
+.savings-slider::-moz-range-thumb{width:22px;height:22px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),#8b7cf7);box-shadow:0 2px 10px var(--accent-glow);cursor:pointer;}
+.savings-slider::-moz-range-track{height:6px;border-radius:3px;background:var(--surface2);}
 .savings-result{min-height:60px;transition:opacity .3s;}
 .savings-weekly{
   font-family:'Outfit',sans-serif;font-weight:900;
@@ -1254,20 +1282,23 @@ footer{
       <div class="stat-number" data-stat="deals" data-target="0"><span class="skeleton-count skeleton">&nbsp;</span></div>
       <div class="stat-label">Deals deze week</div>
     </div>
-    <div class="stat-card reveal reveal-delay-1">
-      <div class="stat-number" data-target="8">0</div>
-      <div class="stat-label">Winkels vergeleken</div>
+    <div class="best-deal-card reveal reveal-delay-1" id="bestDealCard">
+      <div class="best-deal-title">Beste deal nu &#128293;</div>
+      <div class="best-deal-content" id="bestDealContent">
+        <div class="best-deal-item" id="bestDealItem">
+          <div class="best-deal-pct"><span class="skeleton-count skeleton">&nbsp;</span></div>
+          <div class="best-deal-name" style="color:var(--muted);">Laden...</div>
+        </div>
+      </div>
     </div>
     <div class="savings-calc reveal reveal-delay-2">
       <div class="savings-calc-title">Wat bespaar jij?</div>
-      <div class="savings-pills">
-        <button class="savings-pill" data-budget="50">€50</button>
-        <button class="savings-pill active" data-budget="100">€100</button>
-        <button class="savings-pill" data-budget="150">€150</button>
+      <div class="savings-slider-wrap">
+        <div class="savings-slider-label" id="sliderLabel">&euro;100 per week</div>
+        <input type="range" class="savings-slider" id="savingsSlider" min="25" max="200" step="5" value="100">
       </div>
       <div class="savings-result">
-        <div class="savings-hint">Selecteer je wekelijkse budget</div>
-        <div class="savings-weekly" id="savingsWeekly">€...</div>
+        <div class="savings-weekly" id="savingsWeekly">&euro;...</div>
         <div class="savings-yearly" id="savingsMonthly"></div>
         <div class="savings-yearly" id="savingsYearly"></div>
       </div>
@@ -1496,7 +1527,7 @@ footer{
           </div>
           <div class="pricing-feature">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Community <span style="font-size:11px;color:var(--muted);margin-left:4px;">(alleen lezen)</span>
+            Community toegang
           </div>
           <div class="pricing-feature disabled">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1823,6 +1854,35 @@ async function loadDeals() {
       slideTo(page);
     }, 6000);
 
+    // ── Best Deal card cycling ──
+    const topDeals = deals.slice(0, 5);
+    if (topDeals.length > 0) {
+      const bdItem = document.getElementById('bestDealItem');
+      const STORE_COLORS_BD = {'Albert Heijn':'#4da6ff','Jumbo':'#ffc515','Plus':'#00A550','Lidl':'#003DA5','Dirk':'#E31837','Aldi':'#00599d','Etos':'#00a0e2','Kruidvat':'#e40421'};
+      let bdIdx = 0;
+      function renderBestDeal(d) {
+        const color = STORE_COLORS_BD[d.store] || '#8b93b3';
+        const pct = d.discountPct ? `-${Math.round(d.discountPct)}%` : '';
+        const sp = d.salePrice ? `€${parseFloat(d.salePrice).toFixed(2)}` : '';
+        const op = d.originalPrice ? `€${parseFloat(d.originalPrice).toFixed(2)}` : '';
+        return `<div class="best-deal-store"><span style="color:${color};">●</span> ${esc(d.store||'')}</div>
+          <div class="best-deal-pct">${esc(pct)}</div>
+          <div class="best-deal-name">${esc(d.product||'')}</div>
+          <div class="best-deal-prices">${sp?`<span class="sale">${sp}</span>`:''}${op?`<span class="orig">${op}</span>`:''}</div>`;
+      }
+      bdItem.innerHTML = renderBestDeal(topDeals[0]);
+      if (topDeals.length > 1) {
+        setInterval(() => {
+          bdItem.classList.add('fade-out');
+          setTimeout(() => {
+            bdIdx = (bdIdx + 1) % topDeals.length;
+            bdItem.innerHTML = renderBestDeal(topDeals[bdIdx]);
+            bdItem.classList.remove('fade-out');
+          }, 400);
+        }, 5000);
+      }
+    }
+
   } catch (err) {
     console.error('Error loading deals:', err);
     track.innerHTML = '<div class="deals-loading" style="text-align:center;padding:60px 20px;color:var(--muted);font-size:15px;">Kon deals niet laden.</div>';
@@ -1898,14 +1958,16 @@ function updateSavingsCalc(budget) {
   yearlyEl.textContent = '= ' + fmt(yearly) + ' per jaar bespaard';
 }
 
-// Savings pill click handlers
-document.querySelectorAll('.savings-pill').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.savings-pill').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    updateSavingsCalc(parseInt(btn.dataset.budget));
+// Savings range slider
+const savingsSlider = document.getElementById('savingsSlider');
+const sliderLabel = document.getElementById('sliderLabel');
+if (savingsSlider) {
+  savingsSlider.addEventListener('input', () => {
+    const val = parseInt(savingsSlider.value);
+    sliderLabel.textContent = '€' + val + ' per week';
+    updateSavingsCalc(val);
   });
-});
+}
 
 loadStats();
 
