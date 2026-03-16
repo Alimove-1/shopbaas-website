@@ -84,14 +84,28 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
   position:relative;overflow:hidden;
   padding:120px 28px 80px;
 }
-.hero-bg{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 60% 50% at 20% 50%,rgba(108,92,231,.12) 0%,transparent 70%),
-    radial-gradient(ellipse 50% 60% at 80% 30%,rgba(0,229,160,.08) 0%,transparent 70%),
-    radial-gradient(ellipse 80% 40% at 50% 100%,rgba(108,92,231,.06) 0%,transparent 60%);
-  will-change:transform;
+.hero-bg{position:absolute;inset:0;overflow:hidden;will-change:transform;}
+.hero-blob{
+  position:absolute;border-radius:50%;filter:blur(80px);
+  will-change:transform;animation:blobDrift 18s ease-in-out infinite alternate;
 }
+.hero-blob-1{width:50%;height:60%;top:10%;left:5%;background:rgba(108,92,231,.14);animation-duration:18s;}
+.hero-blob-2{width:40%;height:50%;top:5%;right:5%;background:rgba(0,229,160,.09);animation-duration:22s;animation-delay:-5s;}
+.hero-blob-3{width:60%;height:40%;bottom:0;left:20%;background:rgba(10,22,40,.6);animation-duration:20s;animation-delay:-10s;}
+.hero-blob-4{width:30%;height:35%;top:30%;right:20%;background:rgba(255,159,67,.04);animation-duration:16s;animation-delay:-3s;}
+@keyframes blobDrift{
+  0%{transform:translate3d(0,0,0) scale(1);}
+  33%{transform:translate3d(30px,-20px,0) scale(1.05);}
+  66%{transform:translate3d(-20px,15px,0) scale(0.95);}
+  100%{transform:translate3d(10px,-10px,0) scale(1.02);}
+}
+.pricing-blobs{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.pricing-blob{
+  position:absolute;border-radius:50%;filter:blur(80px);
+  animation:blobDrift 20s ease-in-out infinite alternate;
+}
+.pricing-blob-1{width:40%;height:50%;top:10%;left:10%;background:rgba(0,229,160,.05);animation-delay:-4s;}
+.pricing-blob-2{width:35%;height:40%;bottom:10%;right:10%;background:rgba(108,92,231,.06);animation-delay:-8s;animation-duration:22s;}
 .hero-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
 .hero-particle{
   position:absolute;border-radius:50%;
@@ -789,6 +803,25 @@ footer{
   .hero-social{justify-content:center;}
 }
 
+/* ── MOUSE GLOW ── */
+.mouse-glow{
+  position:fixed;top:0;left:0;width:200px;height:200px;
+  border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(108,92,231,.08),transparent 70%);
+  transform:translate(-50%,-50%);will-change:transform;
+  display:none;
+}
+@media(max-width:768px){.mouse-glow{display:none!important;}}
+
+/* ── HERO WORD REVEAL ── */
+.hero-title .word{
+  display:inline-block;opacity:0;
+  transform:translateY(20px);
+  animation:wordUp .5s cubic-bezier(.16,1,.3,1) forwards;
+}
+@keyframes wordUp{to{opacity:1;transform:translateY(0);}}
+.hero-sub{animation:revealUp .8s .6s cubic-bezier(.16,1,.3,1) both;}
+
 /* ── ANIMATIONS ── */
 @keyframes revealUp{
   from{opacity:0;transform:translateY(30px) scale(.985);filter:blur(4px);}
@@ -849,6 +882,10 @@ footer{
   .hero-badge-dot::before,.hero-social-dot::before{animation:none!important;}
   .hero-particles{display:none!important;}
   .hero-bg{transform:none!important;}
+  .hero-blob{animation:none!important;}
+  .pricing-blob{animation:none!important;}
+  .mouse-glow{display:none!important;}
+  .hero-title .word{opacity:1!important;transform:none!important;animation:none!important;}
   .deals-track{transition:none!important;}
 }
 
@@ -960,6 +997,7 @@ footer{
 </script>
 </head>
 <body>
+<div class="mouse-glow" id="mouseGlow"></div>
 
 <!-- NAVIGATION -->
 <nav id="navbar">
@@ -984,7 +1022,12 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-bg" id="heroBg">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-blob hero-blob-3"></div>
+    <div class="hero-blob hero-blob-4"></div>
+  </div>
   <div class="hero-particles" id="heroParticles"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
@@ -993,7 +1036,7 @@ footer{
         <span class="hero-badge-dot"></span>
         Bijna beschikbaar — Meld je aan
       </div>
-      <h1 class="hero-title">Slimmer<br/>boodschappen<br/><span>doen.</span></h1>
+      <h1 class="hero-title" id="heroTitle">Slimmer<br/>boodschappen<br/><span>doen.</span></h1>
       <p class="hero-sub">Vergelijk aanbiedingen van Albert Heijn, Jumbo, Lidl, Etos, Kruidvat en meer in één overzicht. Filter op korting en bespaar tot €40 per week.</p>
       <div class="hero-buttons">
         <a href="#waitlist" class="btn-app" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'});return false;">
@@ -1301,6 +1344,7 @@ footer{
 
 <!-- PRICING -->
 <section class="pricing" id="pricing">
+  <div class="pricing-blobs"><div class="pricing-blob pricing-blob-1"></div><div class="pricing-blob pricing-blob-2"></div></div>
   <div class="pricing-inner">
     <div class="section-label reveal">✦ Abonnementen</div>
     <h2 class="section-title reveal" style="text-align:center;">Kies je plan</h2>
@@ -1802,6 +1846,56 @@ loadWaitlistCount();
 </script>
 
 <script>
+// ── Hero word reveal ──
+(function(){
+  const title=document.getElementById('heroTitle');
+  if(!title||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const html=title.innerHTML;
+  // Split on whitespace and <br/> while preserving them
+  let wordIdx=0;
+  title.innerHTML=html.replace(/(<br\s*\/?>)|(<span[^>]*>)|(<\/span>)|(\S+)/g,(match,br,spanOpen,spanClose,word)=>{
+    if(br)return br;
+    if(spanOpen||spanClose)return match;
+    if(word){const delay=wordIdx*0.08;wordIdx++;return `<span class="word" style="animation-delay:${delay}s">${word}</span>`;}
+    return match;
+  });
+})();
+
+// ── Mouse-following glow ──
+(function(){
+  const glow=document.getElementById('mouseGlow');
+  if(!glow||window.innerWidth<768||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  glow.style.display='block';
+  let mx=0,my=0,cx=0,cy=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  (function tick(){
+    cx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;
+    glow.style.transform=`translate3d(${cx-100}px,${cy-100}px,0)`;
+    requestAnimationFrame(tick);
+  })();
+})();
+
+// ── 3D tilt on feature/deal cards ──
+(function(){
+  if(window.innerWidth<768||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  document.addEventListener('mousemove',e=>{
+    const card=e.target.closest('.feature-card,.deal-card');
+    if(!card||card._tiltActive)return;
+    const rect=card.getBoundingClientRect();
+    const x=(e.clientX-rect.left)/rect.width-.5;
+    const y=(e.clientY-rect.top)/rect.height-.5;
+    card.style.transform=`perspective(800px) rotateX(${-y*10}deg) rotateY(${x*10}deg) translateY(-4px)`;
+  });
+  document.addEventListener('mouseover',e=>{
+    const card=e.target.closest('.feature-card,.deal-card');
+    if(card)card.style.transition='transform .15s ease';
+  });
+  document.addEventListener('mouseout',e=>{
+    const card=e.target.closest('.feature-card,.deal-card');
+    if(card){card.style.transition='transform .3s ease';card.style.transform='';}
+  });
+})();
+
 // ── Hero parallax ──
 (function(){
   const bg = document.getElementById('heroBg');
