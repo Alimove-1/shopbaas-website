@@ -43,7 +43,7 @@ window.addEventListener('load',function(){window.scrollTo(0,0);});
   --orange:#ff9f43;
   --red:#ff6b6b;
   --text:#f0f2f8;
-  --muted:#6b7394;
+  --muted:#8b93b3;
   --radius:16px;
 }
 html{scroll-behavior:smooth;}
@@ -90,7 +90,21 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
     radial-gradient(ellipse 60% 50% at 20% 50%,rgba(108,92,231,.12) 0%,transparent 70%),
     radial-gradient(ellipse 50% 60% at 80% 30%,rgba(0,229,160,.08) 0%,transparent 70%),
     radial-gradient(ellipse 80% 40% at 50% 100%,rgba(108,92,231,.06) 0%,transparent 60%);
+  will-change:transform;
 }
+.hero-particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.hero-particle{
+  position:absolute;border-radius:50%;
+  opacity:0;will-change:transform;
+  animation:particleDrift linear infinite;
+}
+@keyframes particleDrift{
+  0%{opacity:0;transform:translate3d(0,0,0);}
+  15%{opacity:1;}
+  85%{opacity:1;}
+  100%{opacity:0;transform:translate3d(var(--dx),var(--dy),0);}
+}
+@media(max-width:768px){.hero-particles{display:none;}}
 .hero-grid{
   position:absolute;inset:0;
   background-image:
@@ -414,7 +428,16 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 .deals-header{text-align:center;margin-bottom:60px;}
 .deals-header .section-sub{margin:0 auto;}
 
-.deals-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px;}
+.deals-grid{overflow:hidden;position:relative;margin-bottom:16px;}
+.deals-track{display:flex;gap:16px;transition:transform .6s ease;will-change:transform;}
+.deals-track .deal-card{flex-shrink:0;}
+.deals-dots{display:flex;justify-content:center;gap:8px;margin-bottom:40px;}
+.deals-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--surface2);border:1px solid var(--border);
+  cursor:pointer;transition:all .3s;
+}
+.deals-dot.active{background:var(--accent);border-color:var(--accent);width:24px;border-radius:4px;}
 .deal-card{
   background:var(--surface);border:1px solid var(--border);border-radius:16px;
   overflow:hidden;position:relative;
@@ -426,30 +449,31 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
   box-shadow:0 16px 50px rgba(0,0,0,.3),0 0 30px rgba(108,92,231,.05);
 }
 .deal-card-img{
-  height:105px;background:var(--surface2);
+  height:100px;background:var(--surface2);
   display:flex;align-items:center;justify-content:center;
   font-size:48px;position:relative;overflow:hidden;
+  padding:8px;
 }
 .deal-card-img::after{
   content:'';position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(180deg,transparent 50%,var(--surface) 100%);
+  background:linear-gradient(180deg,transparent 60%,var(--surface) 100%);
 }
 .deal-discount{
-  position:absolute;top:10px;right:10px;z-index:2;
+  position:absolute;top:6px;right:6px;z-index:2;
   background:var(--red);color:#fff;
-  font-family:'Outfit',sans-serif;font-weight:800;font-size:12px;
-  padding:4px 10px;border-radius:8px;
+  font-family:'Outfit',sans-serif;font-weight:800;font-size:11px;
+  padding:3px 8px;border-radius:6px;
 }
-.deal-card-body{padding:14px 16px 18px;}
-.deal-card-store{font-size:11px;color:var(--muted);font-weight:500;margin-bottom:4px;}
-.deal-card-name{font-weight:600;font-size:14px;margin-bottom:8px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.deal-card-prices{display:flex;align-items:baseline;gap:8px;}
-.deal-card-sale{font-family:'Outfit',sans-serif;font-weight:800;font-size:20px;color:var(--green);}
-.deal-card-orig{font-size:13px;color:var(--muted);text-decoration:line-through;}
+.deal-card-body{padding:10px 12px 14px;}
+.deal-card-store{font-size:10px;color:var(--muted);font-weight:500;margin-bottom:2px;}
+.deal-card-name{font-weight:600;font-size:13px;margin-bottom:6px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;}
+.deal-card-prices{display:flex;align-items:baseline;gap:6px;}
+.deal-card-sale{font-family:'Outfit',sans-serif;font-weight:800;font-size:17px;color:var(--green);}
+.deal-card-orig{font-size:12px;color:var(--muted);text-decoration:line-through;}
 .deal-card-promo{
-  display:inline-block;margin-top:8px;
+  display:inline-block;margin-top:6px;
   background:rgba(108,92,231,.1);color:var(--accent2);
-  font-size:10px;font-weight:600;padding:3px 10px;border-radius:6px;
+  font-size:9px;font-weight:600;padding:2px 8px;border-radius:5px;
   border:1px solid rgba(108,92,231,.15);
 }
 .deals-loading{
@@ -457,7 +481,9 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
   color:var(--muted);font-size:15px;
 }
 .deal-card-img img{
-  width:100%;height:100%;object-fit:cover;position:relative;z-index:1;
+  max-width:100%;max-height:100%;width:auto;height:auto;
+  object-fit:contain;position:relative;z-index:1;
+  border-radius:8px;
 }
 
 .deals-blur-overlay{
@@ -467,6 +493,85 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 }
 .deals-blur-text{font-family:'Outfit',sans-serif;font-weight:700;font-size:22px;margin-bottom:8px;}
 .deals-blur-sub{color:var(--muted);font-size:14px;margin-bottom:24px;}
+
+/* ── TRUST BADGES ── */
+.trust-badges{padding:0 28px 40px;position:relative;}
+.trust-badges-inner{
+  max-width:900px;margin:0 auto;
+  display:flex;justify-content:center;align-items:center;gap:8px;
+  flex-wrap:wrap;
+}
+.trust-badge-item{font-size:13px;color:var(--muted);font-weight:500;white-space:nowrap;}
+.trust-badge-sep{color:rgba(255,255,255,.12);font-size:10px;}
+@media(max-width:600px){
+  .trust-badges-inner{gap:6px;}
+  .trust-badge-item{font-size:11px;}
+  .trust-badge-sep{display:none;}
+  .trust-badges-inner{flex-direction:column;gap:8px;}
+}
+
+/* ── TESTIMONIALS ── */
+.testimonials{padding:80px 28px;position:relative;}
+.testimonials-inner{max-width:1200px;margin:0 auto;}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.testimonial-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  padding:28px 24px;position:relative;
+  border-left:3px solid var(--accent);
+  transition:border-color .3s,transform .3s;
+}
+.testimonial-card:hover{transform:translateY(-3px);border-color:rgba(108,92,231,.4);}
+.testimonial-quote-icon{
+  font-size:28px;color:var(--accent);opacity:.3;margin-bottom:12px;
+  font-family:Georgia,serif;line-height:1;
+}
+.testimonial-text{font-size:14px;line-height:1.7;color:var(--muted);margin-bottom:16px;font-style:italic;}
+.testimonial-stars{color:var(--orange);font-size:13px;margin-bottom:8px;letter-spacing:2px;}
+.testimonial-author{font-size:13px;font-weight:600;color:var(--text);}
+.testimonial-city{font-size:12px;color:var(--muted);font-weight:500;}
+@media(max-width:900px){.testimonials-grid{grid-template-columns:1fr;max-width:440px;margin:0 auto;}}
+
+/* ── FAQ ── */
+.faq{padding:100px 28px;position:relative;}
+.faq::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 50% 40% at 50% 0%,rgba(108,92,231,.04),transparent 70%);
+}
+.faq-inner{max-width:720px;margin:0 auto;position:relative;}
+.faq-item{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  margin-bottom:12px;overflow:hidden;
+  transition:border-color .3s;
+}
+.faq-item.open{border-color:rgba(108,92,231,.2);}
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:20px 24px;cursor:pointer;
+  font-weight:600;font-size:15px;color:var(--text);
+  transition:color .2s;
+  -webkit-user-select:none;user-select:none;
+}
+.faq-q:hover{color:var(--accent2);}
+.faq-toggle{
+  width:24px;height:24px;flex-shrink:0;position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.faq-toggle::before,.faq-toggle::after{
+  content:'';position:absolute;background:var(--muted);border-radius:2px;
+  transition:transform .3s,opacity .3s;
+}
+.faq-toggle::before{width:14px;height:2px;}
+.faq-toggle::after{width:2px;height:14px;}
+.faq-item.open .faq-toggle::after{transform:rotate(90deg);opacity:0;}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height .3s ease,padding .3s ease;
+}
+.faq-item.open .faq-a{max-height:200px;}
+.faq-a-inner{
+  padding:0 24px 20px;
+  font-size:14px;color:var(--muted);line-height:1.7;
+}
 
 /* ── PRICING ── */
 .pricing{padding:120px 28px;position:relative;overflow:hidden;}
@@ -709,15 +814,84 @@ footer{
 .reveal-delay-2{transition-delay:.2s;}
 .reveal-delay-3{transition-delay:.25s;}
 
+/* Enhanced: Feature card staggered cascade */
+.feature-card.reveal{transform:translateY(30px) scale(.95);transition:all .7s cubic-bezier(.16,1,.3,1);}
+.feature-card.reveal.visible{transform:translateY(0) scale(1);}
+.features-grid .feature-card:nth-child(1){transition-delay:0s;}
+.features-grid .feature-card:nth-child(2){transition-delay:.1s;}
+.features-grid .feature-card:nth-child(3){transition-delay:.2s;}
+.features-grid .feature-card:nth-child(4){transition-delay:.3s;}
+.features-grid .feature-card:nth-child(5){transition-delay:.4s;}
+.features-grid .feature-card:nth-child(6){transition-delay:.5s;}
+
+/* Enhanced: Stat card pop-in */
+.stat-card.reveal,.savings-calc.reveal{
+  transform:scale(.8);
+  transition:all .6s cubic-bezier(.34,1.56,.64,1);
+}
+.stat-card.reveal.visible,.savings-calc.reveal.visible{transform:scale(1);}
+
+/* Enhanced: How-it-works steps slide from left */
+.how-step.reveal{transform:translateX(-30px) scale(.985);transition:all .6s cubic-bezier(.16,1,.3,1);}
+.how-step.reveal.visible{transform:translateX(0) scale(1);}
+.how-steps .how-step:nth-child(2){transition-delay:0s;}
+.how-steps .how-step:nth-child(3){transition-delay:.2s;}
+.how-steps .how-step:nth-child(4){transition-delay:.4s;}
+
 /* Reduced motion */
 @media(prefers-reduced-motion:reduce){
-  .reveal,.hero-text,.hero-visual,.hero-social,.waitlist-success{
+  .reveal,.hero-text,.hero-visual,.hero-social,.waitlist-success,
+  .feature-card.reveal,.stat-card.reveal,.savings-calc.reveal,.how-step.reveal{
     animation:none!important;opacity:1!important;transform:none!important;filter:none!important;
     transition:none!important;
   }
   .phone-toast{animation:none!important;opacity:1!important;transform:none!important;}
   .hero-badge-dot::before,.hero-social-dot::before{animation:none!important;}
+  .hero-particles{display:none!important;}
+  .hero-bg{transform:none!important;}
+  .deals-track{transition:none!important;}
 }
+
+/* ── HAMBURGER + MOBILE MENU ── */
+.hamburger{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  width:36px;height:36px;background:none;border:none;cursor:pointer;padding:6px;z-index:200;
+}
+.hamburger span{
+  display:block;width:100%;height:2px;background:var(--text);border-radius:2px;
+  transition:transform .3s,opacity .3s;
+}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{
+  position:fixed;top:0;left:0;right:0;z-index:99;
+  padding:80px 28px 32px;
+  background:rgba(6,8,13,.95);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+  display:flex;flex-direction:column;gap:0;
+  transform:translateY(-100%);opacity:0;visibility:hidden;pointer-events:none;
+  transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .35s,visibility .35s;
+}
+.mobile-menu a{
+  display:block;padding:16px 0;
+  color:var(--muted);text-decoration:none;font-size:16px;font-weight:500;
+  border-bottom:1px solid var(--border);transition:color .2s;
+}
+.mobile-menu a:last-child{border-bottom:none;}
+.mobile-menu a:hover{color:var(--text);}
+.mobile-menu .mobile-cta{
+  margin-top:16px;text-align:center;
+  background:linear-gradient(135deg,var(--accent),#8b7cf7);color:#fff;
+  padding:14px;border-radius:12px;font-weight:700;font-size:15px;
+  border-bottom:none;
+  box-shadow:0 4px 20px var(--accent-glow);
+}
+.mobile-overlay{
+  display:none;position:fixed;inset:0;z-index:98;background:transparent;
+}
+.mobile-overlay.open{display:block;}
 
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
@@ -727,17 +901,40 @@ footer{
   .phone-mockup{transform:none;width:286px;border-radius:40px;}
   .phone-toasts{display:none;}
   .features-grid{grid-template-columns:1fr;}
-  .deals-grid{grid-template-columns:repeat(2,1fr);}
-  .nav-links a:not(.nav-cta){display:none;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .mobile-menu.open{transform:translateY(0);opacity:1;visibility:visible;pointer-events:auto;}
   .store-logos{gap:10px;}
   .store-logo{width:84px;height:44px;padding:6px;}
   .store-logo img{max-height:28px;max-width:72px;}
 }
 @media(max-width:500px){
-  .deals-grid{grid-template-columns:1fr;}
   .store-logo{width:74px;height:38px;padding:5px;}
   .store-logo img{max-height:22px;max-width:64px;}
 }
+
+/* ── SKELETON LOADERS ── */
+@keyframes shimmer{
+  0%{background-position:-400px 0;}
+  100%{background-position:400px 0;}
+}
+.skeleton{
+  background:linear-gradient(90deg,var(--surface2) 25%,rgba(255,255,255,.04) 50%,var(--surface2) 75%);
+  background-size:800px 100%;
+  animation:shimmer 1.8s ease-in-out infinite;
+  border-radius:12px;
+}
+.skeleton-deal{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;
+}
+.skeleton-deal-img{height:105px;background:var(--surface2);}
+.skeleton-deal-body{padding:14px 16px 18px;display:flex;flex-direction:column;gap:8px;}
+.skeleton-deal-line{height:14px;border-radius:6px;}
+.skeleton-deal-line.w60{width:60%;}
+.skeleton-deal-line.w80{width:80%;}
+.skeleton-deal-line.w40{width:40%;}
+.skeleton-stat{height:100px;border-radius:20px;}
+.skeleton-count{height:28px;width:120px;border-radius:8px;display:inline-block;}
 </style>
 <script type="application/ld+json">
 {
@@ -774,12 +971,21 @@ footer{
       <a href="#pricing">Prijzen</a>
       <a href="#download" class="nav-cta">Gratis aanmelden</a>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features">Features</a>
+  <a href="#deals">Deals</a>
+  <a href="#pricing">Prijzen</a>
+  <a href="#download" class="mobile-cta">Gratis aanmelden</a>
+</div>
+<div class="mobile-overlay" id="mobileOverlay"></div>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-particles" id="heroParticles"></div>
   <div class="hero-grid"></div>
   <div class="hero-content">
     <div class="hero-text">
@@ -869,6 +1075,19 @@ footer{
   </div>
 </section>
 
+<!-- TRUST BADGES -->
+<div class="trust-badges">
+  <div class="trust-badges-inner reveal">
+    <span class="trust-badge-item">AVG/GDPR compliant</span>
+    <span class="trust-badge-sep">&middot;</span>
+    <span class="trust-badge-item">Geen creditcard nodig</span>
+    <span class="trust-badge-sep">&middot;</span>
+    <span class="trust-badge-item">Gratis — voor altijd</span>
+    <span class="trust-badge-sep">&middot;</span>
+    <span class="trust-badge-item">Op elk moment opzeggen</span>
+  </div>
+</div>
+
 <!-- MISSION -->
 <section class="mission">
   <div class="mission-inner">
@@ -885,7 +1104,7 @@ footer{
 <section class="stats-section">
   <div class="stats-inner">
     <div class="stat-card reveal">
-      <div class="stat-number" data-stat="deals" data-target="0">0</div>
+      <div class="stat-number" data-stat="deals" data-target="0"><span class="skeleton-count skeleton">&nbsp;</span></div>
       <div class="stat-label">Deals deze week</div>
     </div>
     <div class="stat-card reveal reveal-delay-1">
@@ -1000,6 +1219,39 @@ footer{
   </div>
 </section>
 
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-inner">
+    <div style="text-align:center;margin-bottom:60px;">
+      <div class="section-label reveal">&#10022; Early testers</div>
+      <h2 class="section-title reveal">Wat onze testers zeggen</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-quote-icon">&ldquo;</div>
+        <p class="testimonial-text">Bespaar makkelijk &euro;20-40 per week. Ik check de app elke week voor de nieuwe deals.</p>
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="testimonial-author">Lisa</div>
+        <div class="testimonial-city">Amsterdam</div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="testimonial-quote-icon">&ldquo;</div>
+        <p class="testimonial-text">Eindelijk alle supermarkt aanbiedingen op &eacute;&eacute;n plek. Geen folders meer nodig!</p>
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="testimonial-author">Mark</div>
+        <div class="testimonial-city">Rotterdam</div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-quote-icon">&ldquo;</div>
+        <p class="testimonial-text">De watchlist functie is geniaal. Krijg een melding zodra mijn favoriete producten in de aanbieding zijn.</p>
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="testimonial-author">Sophie</div>
+        <div class="testimonial-city">Utrecht</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- STORE STRIP -->
 <section class="store-strip">
   <div class="store-strip-inner">
@@ -1027,8 +1279,14 @@ footer{
     </div>
 
     <div class="deals-grid reveal" id="dealsGrid">
-      <div class="deals-loading">Deals laden…</div>
+      <div class="deals-track" id="dealsTrack">
+        <div class="skeleton-deal"><div class="skeleton-deal-img skeleton"></div><div class="skeleton-deal-body"><div class="skeleton-deal-line w60 skeleton"></div><div class="skeleton-deal-line w80 skeleton"></div><div class="skeleton-deal-line w40 skeleton"></div></div></div>
+        <div class="skeleton-deal"><div class="skeleton-deal-img skeleton"></div><div class="skeleton-deal-body"><div class="skeleton-deal-line w60 skeleton"></div><div class="skeleton-deal-line w80 skeleton"></div><div class="skeleton-deal-line w40 skeleton"></div></div></div>
+        <div class="skeleton-deal"><div class="skeleton-deal-img skeleton"></div><div class="skeleton-deal-body"><div class="skeleton-deal-line w60 skeleton"></div><div class="skeleton-deal-line w80 skeleton"></div><div class="skeleton-deal-line w40 skeleton"></div></div></div>
+        <div class="skeleton-deal"><div class="skeleton-deal-img skeleton"></div><div class="skeleton-deal-body"><div class="skeleton-deal-line w60 skeleton"></div><div class="skeleton-deal-line w80 skeleton"></div><div class="skeleton-deal-line w40 skeleton"></div></div></div>
+      </div>
     </div>
+    <div class="deals-dots" id="dealsDots"></div>
 
     <div class="deals-blur-overlay">
       <div class="deals-blur-text">Meer deals ontdekken?</div>
@@ -1157,6 +1415,40 @@ footer{
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="faq-inner">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="section-label reveal">&#10022; Veelgestelde vragen</div>
+      <h2 class="section-title reveal">FAQ</h2>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">Is ShopBaas echt gratis?<span class="faq-toggle"></span></div>
+      <div class="faq-a"><div class="faq-a-inner">Ja, de gratis versie geeft je toegang tot alle aanbiedingen van 8 supermarkten. Pro voegt extra functies toe zoals een watchlist en community.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">Welke supermarkten zitten erin?<span class="faq-toggle"></span></div>
+      <div class="faq-a"><div class="faq-a-inner">Albert Heijn, Jumbo, Lidl, Kruidvat, Etos, Aldi, Plus en Dirk. We voegen regelmatig nieuwe winkels toe.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">Hoe werkt de Early Bird prijs?<span class="faq-toggle"></span></div>
+      <div class="faq-a"><div class="faq-a-inner">De eerste 500 gebruikers betalen &euro;3,99/maand voor Pro — voor altijd. Na de 500 gaat de prijs omhoog.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">Kan ik op elk moment opzeggen?<span class="faq-toggle"></span></div>
+      <div class="faq-a"><div class="faq-a-inner">Ja, je kunt je Pro abonnement op elk moment opzeggen. Geen verborgen kosten, geen gedoe.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">Hoe vaak worden deals bijgewerkt?<span class="faq-toggle"></span></div>
+      <div class="faq-a"><div class="faq-a-inner">Elke week automatisch. Zodra supermarkten nieuwe aanbiedingen publiceren, staan ze in de app.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">Is mijn data veilig?<span class="faq-toggle"></span></div>
+      <div class="faq-a"><div class="faq-a-inner">Absoluut. We slaan minimale gegevens op, volgen de AVG/GDPR richtlijnen, en delen nooit je data met derden.</div></div>
+    </div>
+  </div>
+</section>
+
 <!-- CTA / WAITLIST -->
 <section class="cta" id="download" style="scroll-margin-top:20px;"><a id="waitlist"></a>
   <div class="cta-inner">
@@ -1228,7 +1520,8 @@ const STORE_COLORS = {
 };
 
 async function loadDeals() {
-  const grid = document.getElementById('dealsGrid');
+  const track = document.getElementById('dealsTrack');
+  const dotsEl = document.getElementById('dealsDots');
   try {
     const today = new Date().toISOString().split('T')[0];
     const q = query(
@@ -1243,18 +1536,19 @@ async function loadDeals() {
     deals = deals
       .filter(d => !d.validUntil || d.validUntil >= today)
       .filter(d => d.discountPct && d.discountPct > 0)
+      .filter(d => d.imageUrl && /^https?:\/\//.test(d.imageUrl))
       .sort((a, b) => (b.discountPct || 0) - (a.discountPct || 0))
-      .slice(0, 30);
+      .slice(0, 12);
 
     if (deals.length === 0) {
-      grid.innerHTML = '<div class="deals-loading">Geen actieve deals gevonden.</div>';
+      track.innerHTML = '<div class="deals-loading">Geen actieve deals gevonden.</div>';
       return;
     }
 
     function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
     function renderCard(deal) {
-      const color = STORE_COLORS[deal.store] || '#6b7394';
+      const color = STORE_COLORS[deal.store] || '#8b93b3';
       const safeUrl = deal.imageUrl && /^https?:\/\//.test(deal.imageUrl) ? deal.imageUrl : '';
       const imgHtml = safeUrl
         ? `<img src="${esc(safeUrl)}" alt="${esc(deal.product || '')}" onerror="this.style.display='none'">`
@@ -1265,8 +1559,8 @@ async function loadDeals() {
         : '';
 
       return `
-        <div class="deal-card" style="transition:opacity .4s;">
-          <div class="deal-card-img" style="background:linear-gradient(135deg,#1a1f2e,#1e2538);">
+        <div class="deal-card">
+          <div class="deal-card-img">
             ${imgHtml}
             ${discount ? `<div class="deal-discount">${esc(discount)}</div>` : ''}
           </div>
@@ -1282,34 +1576,52 @@ async function loadDeals() {
         </div>`;
     }
 
-    const visible = deals.slice(0, 8);
-    const reserve = deals.slice(8);
-    grid.innerHTML = visible.map(renderCard).join('');
+    track.innerHTML = deals.map(renderCard).join('');
 
-    if (reserve.length > 0) {
-      setInterval(() => {
-        const cards = grid.querySelectorAll('.deal-card');
-        if (cards.length === 0) return;
-        const idx = Math.floor(Math.random() * cards.length);
-        const card = cards[idx];
+    // Carousel logic — calculate card widths from container
+    const grid = document.getElementById('dealsGrid');
+    const gap = 16;
+    let perPage, cardW, totalPages, page = 0, paused = false;
 
-        const swapDeal = reserve.shift();
-        reserve.push(visible[idx]);
-        visible[idx] = swapDeal;
-
-        card.style.opacity = '0';
-        setTimeout(() => {
-          card.outerHTML = renderCard(swapDeal);
-          const newCard = grid.querySelectorAll('.deal-card')[idx];
-          newCard.style.opacity = '0';
-          requestAnimationFrame(() => { newCard.style.opacity = '1'; });
-        }, 400);
-      }, 6000);
+    function measure() {
+      const containerW = grid.offsetWidth;
+      perPage = containerW < 600 ? 2 : 4;
+      cardW = (containerW - gap * (perPage - 1)) / perPage;
+      totalPages = Math.ceil(deals.length / perPage);
+      // Apply card widths
+      track.querySelectorAll('.deal-card').forEach(c => { c.style.width = cardW + 'px'; c.style.minWidth = cardW + 'px'; });
+      // Rebuild dots
+      dotsEl.innerHTML = '';
+      for (let i = 0; i < totalPages; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'deals-dot' + (i === page ? ' active' : '');
+        dot.addEventListener('click', () => { page = i; slideTo(page); });
+        dotsEl.appendChild(dot);
+      }
+      if (page >= totalPages) page = 0;
+      slideTo(page);
     }
+
+    function slideTo(p) {
+      const offset = p * perPage * (cardW + gap);
+      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+      dotsEl.querySelectorAll('.deals-dot').forEach((d, i) => d.classList.toggle('active', i === p));
+    }
+
+    measure();
+    window.addEventListener('resize', measure);
+    grid.addEventListener('mouseenter', () => { paused = true; });
+    grid.addEventListener('mouseleave', () => { paused = false; });
+
+    setInterval(() => {
+      if (paused) return;
+      page = (page + 1) % totalPages;
+      slideTo(page);
+    }, 6000);
 
   } catch (err) {
     console.error('Error loading deals:', err);
-    grid.innerHTML = '<div class="deals-loading">Kon deals niet laden.</div>';
+    track.innerHTML = '<div class="deals-loading" style="text-align:center;padding:60px 20px;color:var(--muted);font-size:15px;">Kon deals niet laden.</div>';
   }
 }
 
@@ -1339,7 +1651,7 @@ async function loadStats() {
 
     if (discountCount > 0) avgDiscountPct = Math.round(discountSum / discountCount);
     const dealStat = document.querySelector('[data-stat="deals"]');
-    if (dealStat && dealCount > 0) dealStat.dataset.target = dealCount;
+    if (dealStat && dealCount > 0) { dealStat.dataset.target = dealCount; dealStat.textContent = '0'; }
 
     // Animate deal counter if already visible
     if (dealStat && dealStat.closest('.visible') && !dealStat.dataset.animated) {
@@ -1490,6 +1802,49 @@ loadWaitlistCount();
 </script>
 
 <script>
+// ── Hero parallax ──
+(function(){
+  const bg = document.getElementById('heroBg');
+  if (!bg || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (y < window.innerHeight * 1.2) {
+          bg.style.transform = `translate3d(0, ${y * 0.3}px, 0)`;
+        }
+        ticking = false;
+      });
+    }
+  });
+})();
+
+// ── Hero particles ──
+(function(){
+  const container = document.getElementById('heroParticles');
+  if (!container || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const colors = ['rgba(108,92,231,.15)','rgba(0,229,160,.12)','rgba(162,155,254,.1)','rgba(255,255,255,.05)'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'hero-particle';
+    const size = 3 + Math.random() * 5;
+    const dur = 8 + Math.random() * 7;
+    const dx = (Math.random() - 0.5) * 120;
+    const dy = -30 - Math.random() * 60;
+    p.style.cssText = `
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}%;top:${20+Math.random()*60}%;
+      background:${colors[i % colors.length]};
+      animation-duration:${dur}s;
+      animation-delay:${Math.random()*dur}s;
+      --dx:${dx}px;--dy:${dy}px;
+    `;
+    container.appendChild(p);
+  }
+})();
+
 // Nav scroll effect
 const nav = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
@@ -1523,6 +1878,28 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+<script>
+// ── Mobile hamburger menu ──
+(function(){
+  const btn=document.getElementById('hamburger');
+  const menu=document.getElementById('mobileMenu');
+  const overlay=document.getElementById('mobileOverlay');
+  function close(){btn.classList.remove('open');menu.classList.remove('open');overlay.classList.remove('open');}
+  function toggle(){btn.classList.toggle('open');menu.classList.toggle('open');overlay.classList.toggle('open');}
+  btn.addEventListener('click',toggle);
+  overlay.addEventListener('click',close);
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+})();
+</script>
+<script>
+// ── FAQ accordion (one open at a time) ──
+window.toggleFaq = function(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+};
 </script>
 <script src="/cookie-consent.js"></script>
 </body>
