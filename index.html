@@ -10,14 +10,14 @@
 <meta name="description" content="ShopBaas — slimmer boodschappen doen. Vergelijk aanbiedingen van Albert Heijn, Jumbo, Lidl, Etos, Kruidvat en meer. Gratis!"/>
 <meta property="og:title" content="ShopBaas — Slimmer boodschappen doen"/>
 <meta property="og:description" content="Vergelijk supermarkt aanbiedingen van Albert Heijn, Jumbo, Lidl, Etos, Kruidvat en meer. Gratis app, geen advertenties."/>
-<meta property="og:image" content="https://shopbaas.nl/og-cover.png?v=2"/>
+<meta property="og:image" content="https://shopbaas.nl/og-cover.jpg"/>
 <meta property="og:url" content="https://shopbaas.nl"/>
 <meta property="og:type" content="website"/>
 <meta property="og:locale" content="nl_NL"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="ShopBaas — Slimmer boodschappen doen"/>
 <meta name="twitter:description" content="Vergelijk supermarkt aanbiedingen. Gratis app, geen advertenties."/>
-<meta name="twitter:image" content="https://shopbaas.nl/og-cover.png?v=2"/>
+<meta name="twitter:image" content="https://shopbaas.nl/og-cover.jpg"/>
 <link rel="canonical" href="https://shopbaas.nl"/>
 <meta name="theme-color" content="#06080d"/>
 <script>
@@ -775,18 +775,83 @@ nav.scrolled{background:rgba(6,8,13,.92);box-shadow:0 4px 30px rgba(0,0,0,.3);}
 
 /* ── FOOTER ── */
 footer{
-  border-top:1px solid var(--border);
-  padding:40px 28px;
-  text-align:center;
-  position:relative;
-  z-index:10;
+  border-top:1px solid transparent;
+  border-image:linear-gradient(90deg,transparent,var(--accent),transparent) 1;
+  padding:60px 28px 32px;
+  position:relative;z-index:10;
 }
-.footer-inner{max-width:1200px;margin:0 auto;}
-.footer-logo{font-family:'Outfit',sans-serif;font-weight:800;font-size:20px;color:var(--accent2);margin-bottom:12px;}
-.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:12px;}
-.footer-links a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s;}
-.footer-links a:hover{color:var(--accent2);}
-.footer-text{font-size:13px;color:var(--muted);}
+.footer-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 0.8fr 0.8fr 1fr;gap:40px;}
+.footer-col{}
+.footer-logo{font-family:'Outfit',sans-serif;font-weight:800;font-size:22px;background:linear-gradient(135deg,var(--accent),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;}
+.footer-tagline{font-size:13px;color:var(--muted);margin-bottom:16px;}
+.footer-badges{display:flex;gap:10px;}
+.footer-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;padding:8px 14px;text-decoration:none;color:var(--text);
+  font-size:12px;transition:border-color .3s;
+}
+.footer-badge:hover{border-color:var(--accent);}
+.footer-badge svg{width:16px;height:16px;fill:currentColor;}
+.footer-badge strong{font-size:13px;}
+.footer-heading{font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;margin-bottom:14px;color:var(--text);}
+.footer-link-list{display:flex;flex-direction:column;gap:10px;}
+.footer-link-list a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s;}
+.footer-link-list a:hover{color:var(--accent2);}
+.footer-social{display:flex;gap:10px;margin-bottom:16px;}
+.footer-social-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--surface2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .3s,box-shadow .3s,transform .3s;
+}
+.footer-social-icon:hover{border-color:var(--accent);box-shadow:0 0 16px var(--accent-glow);transform:translateY(-2px);}
+.footer-social-icon svg{width:16px;height:16px;fill:var(--muted);}
+.footer-social-icon:hover svg{fill:var(--accent2);}
+.footer-made{font-size:12px;color:var(--muted);}
+.footer-bottom{grid-column:1/-1;text-align:center;padding-top:24px;border-top:1px solid var(--border);font-size:12px;color:var(--muted);}
+@media(max-width:768px){.footer-inner{grid-template-columns:1fr;gap:32px;text-align:center;}.footer-badges{justify-content:center;}.footer-social{justify-content:center;}.footer-link-list{align-items:center;}}
+
+/* ── SCROLL TO TOP ── */
+.scroll-top{
+  position:fixed;bottom:28px;right:28px;z-index:90;
+  width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),#8b7cf7);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 20px var(--accent-glow);
+  opacity:0;transform:translateY(20px);pointer-events:none;
+  transition:opacity .3s,transform .3s,box-shadow .3s;
+}
+.scroll-top.visible{opacity:1;transform:translateY(0);pointer-events:auto;}
+.scroll-top:hover{transform:translateY(0) scale(1.1);box-shadow:0 8px 30px var(--accent-glow);}
+.scroll-top svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+
+/* ── COMPARISON TABLE ── */
+.comparison{padding:80px 28px;position:relative;}
+.comparison-inner{max-width:800px;margin:0 auto;position:relative;}
+.comparison-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:16px;overflow:hidden;border:1px solid var(--border);}
+.comparison-table th,.comparison-table td{padding:14px 20px;text-align:left;font-size:14px;border-bottom:1px solid var(--border);}
+.comparison-table thead th{
+  background:var(--surface);font-family:'Outfit',sans-serif;font-weight:700;
+  position:sticky;top:0;z-index:2;font-size:15px;
+}
+.comparison-table thead th:not(:first-child){text-align:center;width:120px;}
+.comparison-table tbody tr:nth-child(odd){background:var(--surface);}
+.comparison-table tbody tr:nth-child(even){background:var(--surface2);}
+.comparison-table tbody td:not(:first-child){text-align:center;}
+.comparison-table tbody tr:last-child td{border-bottom:none;}
+.cmp-yes{color:var(--green);font-weight:700;}
+.cmp-no{color:var(--muted);}
+.cmp-limit{color:var(--orange);font-size:12px;font-weight:600;}
+.cmp-pro{
+  display:inline-block;background:rgba(108,92,231,.15);color:var(--accent2);
+  font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;
+  border:1px solid rgba(108,92,231,.2);
+}
+@media(max-width:600px){
+  .comparison-table th,.comparison-table td{padding:10px 12px;font-size:13px;}
+  .comparison-table thead th:not(:first-child){width:80px;}
+}
 
 /* ── HERO SOCIAL PROOF ── */
 .hero-social{
@@ -1016,7 +1081,7 @@ footer{
   "applicationCategory": "ShoppingApplication",
   "description": "Vergelijk supermarkt aanbiedingen van Albert Heijn, Jumbo, Lidl, Etos, Kruidvat en meer. Gratis app.",
   "url": "https://shopbaas.nl",
-  "image": "https://shopbaas.nl/og-cover.png",
+  "image": "https://shopbaas.nl/og-cover.jpg",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -1119,7 +1184,7 @@ footer{
       <div class="phone-mockup">
         <div class="phone-notch"></div>
         <div class="phone-screen">
-          <img src="app-screenshot.png?v=2" alt="ShopBaas App" class="phone-screenshot"/>
+          <img src="app-screenshot.jpg" alt="ShopBaas App" class="phone-screenshot"/>
         </div>
 
         <!-- Notification toasts (replaces old floating tags) -->
@@ -1415,11 +1480,7 @@ footer{
           </div>
           <div class="pricing-feature">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Filter op winkel & categorie
-          </div>
-          <div class="pricing-feature">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Filter op korting %
+            Filter op winkel, categorie &amp; korting %
           </div>
           <div class="pricing-feature">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1427,15 +1488,23 @@ footer{
           </div>
           <div class="pricing-feature">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Community toegang
+            Badges &amp; achievements
           </div>
-          <div class="pricing-feature disabled">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-            Product volgen & alerts
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Watchlist <span style="font-size:11px;color:var(--muted);margin-left:4px;">(max 1)</span>
+          </div>
+          <div class="pricing-feature">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Community <span style="font-size:11px;color:var(--muted);margin-left:4px;">(alleen lezen)</span>
           </div>
           <div class="pricing-feature disabled">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             Besparingen bijhouden
+          </div>
+          <div class="pricing-feature disabled">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Exclusieve thema's &amp; kleuren
           </div>
           <div class="pricing-feature disabled">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1463,15 +1532,11 @@ footer{
           </div>
           <div class="pricing-feature">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Filter op winkel & categorie
+            Filter op winkel, categorie &amp; korting %
           </div>
           <div class="pricing-feature">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Filter op korting %
-          </div>
-          <div class="pricing-feature">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Community toegang
+            Badges &amp; achievements
           </div>
           <div class="pricing-feature highlight">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1479,7 +1544,11 @@ footer{
           </div>
           <div class="pricing-feature highlight">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Product volgen & alerts
+            Onbeperkt watchlist &amp; meldingen
+          </div>
+          <div class="pricing-feature highlight">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Community: plaatsen &amp; reageren
           </div>
           <div class="pricing-feature highlight">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1487,7 +1556,11 @@ footer{
           </div>
           <div class="pricing-feature highlight">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Alle producten per deal
+            Bespaaroverzicht per e-mail
+          </div>
+          <div class="pricing-feature highlight">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Exclusieve thema's &amp; kleuren
           </div>
           <div class="pricing-feature highlight">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1575,15 +1648,51 @@ footer{
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-logo">ShopBaas</div>
-    <div class="footer-links">
-      <a href="privacy.html">Privacybeleid</a>
-      <a href="terms.html">Gebruiksvoorwaarden</a>
-      <a href="mailto:info@shopbaas.nl">Contact</a>
+    <div class="footer-col">
+      <div class="footer-logo">ShopBaas</div>
+      <div class="footer-tagline">Bespaar slim op je boodschappen</div>
+      <div class="footer-badges">
+        <a href="#waitlist" class="footer-badge" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'});return false;">
+          <svg viewBox="0 0 17 20"><path d="M13.545 10.239c-.022-2.389 1.95-3.537 2.039-3.594-1.11-1.623-2.838-1.844-3.453-1.869-1.47-.149-2.87.866-3.615.866-.746 0-1.899-.844-3.12-.821-1.606.023-3.088.934-3.914 2.373-1.67 2.896-.428 7.188 1.2 9.538.795 1.15 1.743 2.44 2.988 2.394 1.199-.048 1.651-.775 3.1-.775 1.449 0 1.855.775 3.12.751 1.29-.023 2.109-1.17 2.898-2.324.913-1.332 1.29-2.622 1.313-2.689-.029-.013-2.52-.967-2.546-3.836z"/></svg>
+          <strong>App Store</strong>
+        </a>
+        <a href="#waitlist" class="footer-badge" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'});return false;">
+          <svg viewBox="0 0 512 512"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+          <strong>Google Play</strong>
+        </a>
+      </div>
     </div>
-    <div class="footer-text">&copy; 2026 ShopBaas. Slimmer boodschappen doen.</div>
+    <div class="footer-col">
+      <div class="footer-heading">Product</div>
+      <div class="footer-link-list">
+        <a href="#features" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'});return false;">Features</a>
+        <a href="#pricing" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'});return false;">Prijzen</a>
+        <a href="#faq" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'});return false;">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-heading">Juridisch</div>
+      <div class="footer-link-list">
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Voorwaarden</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <div class="footer-heading">Volg ons</div>
+      <div class="footer-social">
+        <a class="footer-social-icon" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5"/></svg></a>
+        <a class="footer-social-icon" href="https://www.tiktok.com/@shopbaas" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.88-2.88 2.89 2.89 0 012.88-2.88c.28 0 .55.04.81.11v-3.53a6.26 6.26 0 00-.81-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.19a8.16 8.16 0 004.76 1.53V7.28a4.84 4.84 0 01-1-.59z"/></svg></a>
+      </div>
+      <div class="footer-made">Made with <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--red)" style="vertical-align:-2px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 ShopBaas. Alle rechten voorbehouden.</div>
   </div>
 </footer>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" aria-label="Scroll naar boven">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -1909,6 +2018,14 @@ loadWaitlistCount();
 </script>
 
 <script>
+// ── Scroll to top button ──
+(function(){
+  const btn=document.getElementById('scrollTop');
+  if(!btn)return;
+  window.addEventListener('scroll',()=>{btn.classList.toggle('visible',window.scrollY>600);});
+  btn.addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'});});
+})();
+
 // ── Urgency bar close ──
 document.getElementById('urgencyClose')?.addEventListener('click',()=>{
   const bar=document.getElementById('urgencyBar');
