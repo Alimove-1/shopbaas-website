@@ -1754,6 +1754,9 @@ const STORE_COLORS = {
   'Edeka': '#ffd500',
 };
 
+let _carouselInterval = null;
+let _bestDealInterval = null;
+
 async function loadDeals() {
   const track = document.getElementById('dealsTrack');
   const dotsEl = document.getElementById('dealsDots');
@@ -1848,7 +1851,8 @@ async function loadDeals() {
     grid.addEventListener('mouseenter', () => { paused = true; });
     grid.addEventListener('mouseleave', () => { paused = false; });
 
-    setInterval(() => {
+    if (_carouselInterval) clearInterval(_carouselInterval);
+    _carouselInterval = setInterval(() => {
       if (paused) return;
       page = (page + 1) % totalPages;
       slideTo(page);
@@ -1872,7 +1876,8 @@ async function loadDeals() {
       }
       bdItem.innerHTML = renderBestDeal(topDeals[0]);
       if (topDeals.length > 1) {
-        setInterval(() => {
+        if (_bestDealInterval) clearInterval(_bestDealInterval);
+        _bestDealInterval = setInterval(() => {
           bdItem.classList.add('fade-out');
           setTimeout(() => {
             bdIdx = (bdIdx + 1) % topDeals.length;
@@ -2118,6 +2123,7 @@ document.getElementById('urgencyClose')?.addEventListener('click',()=>{
   let mx=0,my=0,cx=0,cy=0;
   document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
   (function tick(){
+    if(!document.body.contains(glow))return;
     cx+=(mx-cx)*0.15;cy+=(my-cy)*0.15;
     glow.style.transform=`translate3d(${cx-100}px,${cy-100}px,0)`;
     requestAnimationFrame(tick);
