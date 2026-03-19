@@ -2053,12 +2053,15 @@ window.submitWaitlist = async function() {
   msg.textContent = '';
 
   try {
+    const eventId = crypto.randomUUID();
+
+    if (typeof ttq !== 'undefined') ttq.track('CompleteRegistration', {}, { event_id: eventId });
+
     await addDoc(collection(db, 'waitlist'), {
       email: email,
       createdAt: serverTimestamp(),
+      eventId: eventId,
     });
-
-    if (typeof ttq !== 'undefined') ttq.track('CompleteRegistration');
 
     document.getElementById('waitlistForm').style.display = 'none';
     const success = document.getElementById('waitlistSuccess');
