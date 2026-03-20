@@ -2056,7 +2056,10 @@ function animateCount(el, target, duration, prefix) {
       if (_clickedCTAs.has(label)) return;
       _clickedCTAs.add(label);
       setTimeout(function() { _clickedCTAs.delete(label); }, 2000);
-      track('cta_click', { label: label, text: (el.textContent || '').trim().substring(0, 80) });
+      var ctaData = { label: label, text: (el.textContent || '').trim().substring(0, 80) };
+      var utm = getUTM();
+      if (utm) ctaData.utm = utm;
+      track('cta_click', ctaData);
     });
   }
 
