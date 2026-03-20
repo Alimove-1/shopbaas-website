@@ -11,6 +11,10 @@
     ],
     "rewrites": [
       {
+        "source": "/download",
+        "destination": "/download.html"
+      },
+      {
         "source": "/deal/**",
         "destination": "/deal.html"
       }
