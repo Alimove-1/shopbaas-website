@@ -15,6 +15,10 @@
         "destination": "/download.html"
       },
       {
+        "source": "/aanbiedingen-vergelijken",
+        "destination": "/aanbiedingen-vergelijken.html"
+      },
+      {
         "source": "/deal/**",
         "destination": "/deal.html"
       }

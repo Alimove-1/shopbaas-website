@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Allow: /aanbiedingen-vergelijken
 Disallow: /deal/
 
 Sitemap: https://shopbaas.nl/sitemap.xml
