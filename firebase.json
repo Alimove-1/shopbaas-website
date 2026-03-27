@@ -24,8 +24,22 @@
         "destination": "/blog.html"
       },
       {
+        "source": "/aanbiedingen",
+        "destination": "/aanbiedingen/index.html"
+      },
+      {
+        "source": "/goedkoopste-supermarkt",
+        "destination": "/goedkoopste-supermarkt.html"
+      },
+      {
+        "source": "/boodschappen-besparen",
+        "destination": "/boodschappen-besparen.html"
+      },
+      {
         "source": "/deal/**",
-        "destination": "/deal.html"
+        "function": {
+          "functionId": "dealPage"
+        }
       }
     ],
     "headers": [

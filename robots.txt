@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
-Allow: /aanbiedingen-vergelijken
-Disallow: /deal/
+Allow: /aanbiedingen/
+Allow: /blog/
+Allow: /deal/
+Allow: /goedkoopste-supermarkt
+Allow: /boodschappen-besparen
 
 Sitemap: https://shopbaas.nl/sitemap.xml
