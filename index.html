@@ -8,6 +8,13 @@
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  wait_for_update: 500
+});
 gtag('js', new Date());
 gtag('config', 'G-8ETV9YR5BT');
 </script>
@@ -1086,6 +1093,70 @@ footer{
 .skeleton-deal-line.w40{width:40%;}
 .skeleton-stat{height:100px;border-radius:20px;}
 .skeleton-count{height:28px;width:120px;border-radius:8px;display:inline-block;}
+
+/* ── Android Beta Modal ── */
+.android-modal-overlay{
+  position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.android-modal-overlay.open{display:flex;}
+.android-modal{
+  background:var(--surface);border:1px solid var(--border);border-radius:20px;
+  padding:32px 28px;max-width:420px;width:100%;position:relative;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.android-modal-close{
+  position:absolute;top:12px;right:16px;background:none;border:none;
+  color:var(--muted);font-size:22px;cursor:pointer;padding:4px 8px;line-height:1;
+}
+.android-modal-close:hover{color:var(--text);}
+.android-modal-icon{
+  width:48px;height:48px;border-radius:12px;background:rgba(108,92,231,.15);
+  display:flex;align-items:center;justify-content:center;margin-bottom:16px;
+}
+.android-modal-icon svg{width:24px;height:24px;fill:var(--accent);}
+.android-modal h3{font-family:'Outfit',sans-serif;font-weight:700;font-size:20px;margin-bottom:8px;}
+.android-modal p{color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:20px;}
+.android-modal-form{display:flex;gap:8px;}
+.android-modal-input{
+  flex:1;padding:12px 16px;border-radius:12px;border:1px solid var(--border);
+  background:var(--bg);color:var(--text);font-size:15px;font-family:inherit;outline:none;
+}
+.android-modal-input:focus{border-color:var(--accent);}
+.android-modal-input::placeholder{color:var(--muted);}
+.android-modal-btn{
+  padding:12px 20px;border-radius:12px;border:none;
+  background:linear-gradient(135deg,var(--accent),var(--green));
+  color:#fff;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap;
+  font-family:inherit;
+}
+.android-modal-btn:hover{opacity:.9;}
+.android-modal-btn:disabled{opacity:.5;cursor:not-allowed;}
+.android-modal-error{color:#ff6b6b;font-size:13px;margin-top:8px;display:none;}
+.android-modal-success{text-align:center;padding:12px 0;}
+.android-modal-success .success-check{
+  width:56px;height:56px;border-radius:50%;background:rgba(0,229,160,.15);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 16px;
+  font-size:28px;color:var(--green);
+}
+.android-modal-success h3{margin-bottom:8px;}
+.android-modal-success p{margin-bottom:0;}
+.android-modal-counter{
+  display:flex;align-items:center;gap:8px;margin-top:16px;
+  padding:10px 14px;border-radius:10px;background:rgba(0,229,160,.08);
+  font-size:13px;color:var(--green);
+}
+.android-modal-counter .bar{
+  flex:1;height:6px;border-radius:3px;background:var(--surface2);overflow:hidden;
+}
+.android-modal-counter .bar-fill{
+  height:100%;border-radius:3px;background:var(--green);transition:width .5s ease;
+}
+@media(max-width:480px){
+  .android-modal{padding:24px 20px;}
+  .android-modal-form{flex-direction:column;}
+  .android-modal-btn{text-align:center;}
+}
 </style>
 <script type="application/ld+json">
 {
@@ -1233,6 +1304,7 @@ footer{
       <a href="#features">Features</a>
       <a href="#deals">Deals</a>
       <a href="#pricing">Prijzen</a>
+      <a href="/blog">Blog</a>
       <a href="#download" class="nav-cta" data-track="cta-nav">Download</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -1242,6 +1314,7 @@ footer{
   <a href="#features">Features</a>
   <a href="#deals">Deals</a>
   <a href="#pricing">Prijzen</a>
+  <a href="/blog">Blog</a>
   <a href="#download" class="mobile-cta" data-track="cta-mobile-nav">Download</a>
 </div>
 <div class="mobile-overlay" id="mobileOverlay"></div>
@@ -1269,11 +1342,11 @@ footer{
           <span class="btn-app-icon"><svg width="20" height="24" viewBox="0 0 17 20" fill="currentColor"><path d="M13.545 10.239c-.022-2.389 1.95-3.537 2.039-3.594-1.11-1.623-2.838-1.844-3.453-1.869-1.47-.149-2.87.866-3.615.866-.746 0-1.899-.844-3.12-.821-1.606.023-3.088.934-3.914 2.373-1.67 2.896-.428 7.188 1.2 9.538.795 1.15 1.743 2.44 2.988 2.394 1.199-.048 1.651-.775 3.1-.775 1.449 0 1.855.775 3.12.751 1.29-.023 2.109-1.17 2.898-2.324.913-1.332 1.29-2.622 1.313-2.689-.029-.013-2.52-.967-2.546-3.836l-.01-.014zM11.15 2.993C11.82 2.179 12.276.997 12.146 0c-1.017.04-2.25.677-2.98 1.533-.655.758-1.228 1.967-1.074 3.128 1.135.088 2.293-.577 3.058-1.668z"/></svg></span>
           <span class="btn-app-text"><small>Download op</small><strong>App Store</strong></span>
         </a>
-        <a href="https://play.google.com/apps/internaltest/4701537676310646058" class="btn-app" data-track="cta-hero-playstore" target="_blank" rel="noopener" onclick="ttq.track('ClickButton',{content_name:'download_android',content_category:'play_store'});">
+        <a href="#" class="btn-app" data-track="cta-hero-playstore" onclick="event.preventDefault();openAndroidModal();typeof ttq!=='undefined'&&ttq.track('ClickButton',{content_name:'android_beta_signup',content_category:'play_store'});">
           <span class="btn-app-icon"><svg width="20" height="22" viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg></span>
-          <span class="btn-app-text"><small>Probeer de beta</small><strong>Google Play (beta)</strong></span>
+          <span class="btn-app-text"><small>Word beta tester</small><strong>Google Play</strong></span>
         </a>
-        <div style="font-size:12px;color:var(--muted);margin-top:8px;">Android? We zijn er bijna — probeer alvast de beta!</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px;">Beschikbaar voor iPhone en Android</div>
       </div>
       <div class="og-badge" style="margin-top:20px;display:none;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -1770,9 +1843,9 @@ footer{
           <span class="btn-app-icon"><svg width="20" height="24" viewBox="0 0 17 20" fill="currentColor"><path d="M13.545 10.239c-.022-2.389 1.95-3.537 2.039-3.594-1.11-1.623-2.838-1.844-3.453-1.869-1.47-.149-2.87.866-3.615.866-.746 0-1.899-.844-3.12-.821-1.606.023-3.088.934-3.914 2.373-1.67 2.896-.428 7.188 1.2 9.538.795 1.15 1.743 2.44 2.988 2.394 1.199-.048 1.651-.775 3.1-.775 1.449 0 1.855.775 3.12.751 1.29-.023 2.109-1.17 2.898-2.324.913-1.332 1.29-2.622 1.313-2.689-.029-.013-2.52-.967-2.546-3.836l-.01-.014zM11.15 2.993C11.82 2.179 12.276.997 12.146 0c-1.017.04-2.25.677-2.98 1.533-.655.758-1.228 1.967-1.074 3.128 1.135.088 2.293-.577 3.058-1.668z"/></svg></span>
           <span class="btn-app-text"><small>Download op</small><strong>App Store</strong></span>
         </a>
-        <a href="https://play.google.com/apps/internaltest/4701537676310646058" class="btn-app" data-track="cta-bottom-playstore" target="_blank" rel="noopener" onclick="ttq.track('ClickButton',{content_name:'download_android',content_category:'play_store'});">
+        <a href="#" class="btn-app" data-track="cta-bottom-playstore" onclick="event.preventDefault();openAndroidModal();typeof ttq!=='undefined'&&ttq.track('ClickButton',{content_name:'android_beta_signup',content_category:'play_store'});">
           <span class="btn-app-icon"><svg width="20" height="22" viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg></span>
-          <span class="btn-app-text"><small>Probeer de beta</small><strong>Google Play</strong></span>
+          <span class="btn-app-text"><small>Word beta tester</small><strong>Google Play</strong></span>
         </a>
       </div>
       <div class="waitlist-msg" id="waitlistMsg" style="display:none;"></div>
@@ -1804,7 +1877,7 @@ footer{
           <svg viewBox="0 0 17 20"><path d="M13.545 10.239c-.022-2.389 1.95-3.537 2.039-3.594-1.11-1.623-2.838-1.844-3.453-1.869-1.47-.149-2.87.866-3.615.866-.746 0-1.899-.844-3.12-.821-1.606.023-3.088.934-3.914 2.373-1.67 2.896-.428 7.188 1.2 9.538.795 1.15 1.743 2.44 2.988 2.394 1.199-.048 1.651-.775 3.1-.775 1.449 0 1.855.775 3.12.751 1.29-.023 2.109-1.17 2.898-2.324.913-1.332 1.29-2.622 1.313-2.689-.029-.013-2.52-.967-2.546-3.836z"/></svg>
           <strong>App Store</strong>
         </a>
-        <a href="https://play.google.com/apps/internaltest/4701537676310646058" class="footer-badge" data-track="cta-footer-playstore" target="_blank" rel="noopener" onclick="ttq.track('ClickButton',{content_name:'download_android',content_category:'play_store'});">
+        <a href="#" class="footer-badge" data-track="cta-footer-playstore" onclick="event.preventDefault();openAndroidModal();">
           <svg viewBox="0 0 512 512"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
           <strong>Google Play</strong>
         </a>
@@ -1817,6 +1890,7 @@ footer{
         <a href="#pricing" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'});return false;">Prijzen</a>
         <a href="#faq" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'});return false;">FAQ</a>
         <a href="/aanbiedingen-vergelijken">Aanbiedingen vergelijken</a>
+        <a href="/blog">Blog</a>
       </div>
     </div>
     <div class="footer-col">
@@ -2107,6 +2181,85 @@ function animateCount(el, target, duration, prefix) {
   requestAnimationFrame(tick);
 }
 
+// ── Android Beta Tester Signup ──
+const ANDROID_TARGET = 12;
+async function loadAndroidCount() {
+  try {
+    const statsDoc = await getDoc(doc(db, 'stats', 'androidTesters'));
+    const count = statsDoc.exists() ? (statsDoc.data().count || 0) : 0;
+    updateAndroidCounter(count);
+    return count;
+  } catch (e) { return 0; }
+}
+function updateAndroidCounter(count) {
+  const text = document.getElementById('androidCountText');
+  const bar = document.getElementById('androidBar');
+  const spots = document.getElementById('androidSpotsLeft');
+  if (text) text.textContent = count + '/' + ANDROID_TARGET + ' testers aangemeld';
+  if (bar) bar.style.width = Math.min(100, Math.round(count / ANDROID_TARGET * 100)) + '%';
+  if (spots) spots.textContent = Math.max(0, ANDROID_TARGET - count);
+}
+window.openAndroidModal = function() {
+  const modal = document.getElementById('androidModal');
+  const form = document.getElementById('androidModalForm');
+  const success = document.getElementById('androidModalSuccess');
+  form.style.display = '';
+  success.style.display = 'none';
+  document.getElementById('androidEmail').value = '';
+  document.getElementById('androidError').style.display = 'none';
+  modal.classList.add('open');
+  loadAndroidCount();
+  setTimeout(() => document.getElementById('androidEmail').focus(), 100);
+};
+window.closeAndroidModal = function() {
+  document.getElementById('androidModal').classList.remove('open');
+};
+document.getElementById('androidModal').addEventListener('click', function(e) {
+  if (e.target === this) closeAndroidModal();
+});
+document.getElementById('androidEmail').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') submitAndroidTester();
+});
+window.submitAndroidTester = async function() {
+  const input = document.getElementById('androidEmail');
+  const btn = document.getElementById('androidSubmitBtn');
+  const err = document.getElementById('androidError');
+  const email = input.value.trim().toLowerCase();
+  err.style.display = 'none';
+  if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    err.textContent = 'Vul een geldig e-mailadres in.';
+    err.style.display = 'block';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Bezig...';
+  try {
+    // Check duplicate
+    const q = query(collection(db, 'androidTesters'), where('email', '==', email));
+    const existing = await getDocs(q);
+    if (!existing.empty) {
+      err.textContent = 'Dit e-mailadres is al aangemeld!';
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Aanmelden';
+      return;
+    }
+    await addDoc(collection(db, 'androidTesters'), {
+      email: email,
+      createdAt: serverTimestamp(),
+      source: 'website'
+    });
+    document.getElementById('androidEmailConfirm').textContent = email;
+    document.getElementById('androidModalForm').style.display = 'none';
+    document.getElementById('androidModalSuccess').style.display = '';
+  } catch (e) {
+    err.textContent = 'Er ging iets mis. Probeer het opnieuw.';
+    err.style.display = 'block';
+  }
+  btn.disabled = false;
+  btn.textContent = 'Aanmelden';
+};
+loadAndroidCount();
 
 // ── Website Analytics Tracker ──
 // Writes events to websiteEvents collection after cookie consent
@@ -2384,6 +2537,33 @@ window.toggleFaq = function(el) {
   if (!wasOpen) item.classList.add('open');
 };
 </script>
+<!-- Android Beta Email Modal -->
+<div class="android-modal-overlay" id="androidModal">
+  <div class="android-modal">
+    <button class="android-modal-close" onclick="closeAndroidModal()">&times;</button>
+    <div id="androidModalForm">
+      <div class="android-modal-icon">
+        <svg viewBox="0 0 512 512"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+      </div>
+      <h3>Android beta tester worden</h3>
+      <p>De Android app is in testfase. Laat je e-mailadres achter en we sturen je een uitnodiging zodra er plek is. We hebben nog <strong id="androidSpotsLeft">12</strong> testers nodig!</p>
+      <div class="android-modal-form">
+        <input type="email" class="android-modal-input" id="androidEmail" placeholder="je@email.nl" autocomplete="email"/>
+        <button class="android-modal-btn" id="androidSubmitBtn" onclick="submitAndroidTester()">Aanmelden</button>
+      </div>
+      <div class="android-modal-error" id="androidError"></div>
+      <div class="android-modal-counter" id="androidCounter">
+        <span id="androidCountText">0/12 testers aangemeld</span>
+        <div class="bar"><div class="bar-fill" id="androidBar" style="width:0%"></div></div>
+      </div>
+    </div>
+    <div class="android-modal-success" id="androidModalSuccess" style="display:none;">
+      <div class="success-check">&#10003;</div>
+      <h3>Je bent aangemeld!</h3>
+      <p>We sturen je een uitnodiging op <strong id="androidEmailConfirm"></strong> zodra we genoeg testers hebben.</p>
+    </div>
+  </div>
+</div>
 <script src="/cookie-consent.js"></script>
 </body>
 </html>
