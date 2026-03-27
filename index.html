@@ -1141,17 +1141,6 @@ footer{
 }
 .android-modal-success h3{margin-bottom:8px;}
 .android-modal-success p{margin-bottom:0;}
-.android-modal-counter{
-  display:flex;align-items:center;gap:8px;margin-top:16px;
-  padding:10px 14px;border-radius:10px;background:rgba(0,229,160,.08);
-  font-size:13px;color:var(--green);
-}
-.android-modal-counter .bar{
-  flex:1;height:6px;border-radius:3px;background:var(--surface2);overflow:hidden;
-}
-.android-modal-counter .bar-fill{
-  height:100%;border-radius:3px;background:var(--green);transition:width .5s ease;
-}
 @media(max-width:480px){
   .android-modal{padding:24px 20px;}
   .android-modal-form{flex-direction:column;}
@@ -2182,33 +2171,13 @@ function animateCount(el, target, duration, prefix) {
 }
 
 // ── Android Beta Tester Signup ──
-const ANDROID_TARGET = 12;
-async function loadAndroidCount() {
-  try {
-    const statsDoc = await getDoc(doc(db, 'stats', 'androidTesters'));
-    const count = statsDoc.exists() ? (statsDoc.data().count || 0) : 0;
-    updateAndroidCounter(count);
-    return count;
-  } catch (e) { return 0; }
-}
-function updateAndroidCounter(count) {
-  const text = document.getElementById('androidCountText');
-  const bar = document.getElementById('androidBar');
-  const spots = document.getElementById('androidSpotsLeft');
-  if (text) text.textContent = count + '/' + ANDROID_TARGET + ' testers aangemeld';
-  if (bar) bar.style.width = Math.min(100, Math.round(count / ANDROID_TARGET * 100)) + '%';
-  if (spots) spots.textContent = Math.max(0, ANDROID_TARGET - count);
-}
 window.openAndroidModal = function() {
   const modal = document.getElementById('androidModal');
-  const form = document.getElementById('androidModalForm');
-  const success = document.getElementById('androidModalSuccess');
-  form.style.display = '';
-  success.style.display = 'none';
+  document.getElementById('androidModalForm').style.display = '';
+  document.getElementById('androidModalSuccess').style.display = 'none';
   document.getElementById('androidEmail').value = '';
   document.getElementById('androidError').style.display = 'none';
   modal.classList.add('open');
-  loadAndroidCount();
   setTimeout(() => document.getElementById('androidEmail').focus(), 100);
 };
 window.closeAndroidModal = function() {
@@ -2259,7 +2228,6 @@ window.submitAndroidTester = async function() {
   btn.disabled = false;
   btn.textContent = 'Aanmelden';
 };
-loadAndroidCount();
 
 // ── Website Analytics Tracker ──
 // Writes events to websiteEvents collection after cookie consent
@@ -2545,22 +2513,18 @@ window.toggleFaq = function(el) {
       <div class="android-modal-icon">
         <svg viewBox="0 0 512 512"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
       </div>
-      <h3>Android beta tester worden</h3>
-      <p>De Android app is in testfase. Laat je e-mailadres achter en we sturen je een uitnodiging zodra er plek is. We hebben nog <strong id="androidSpotsLeft">12</strong> testers nodig!</p>
+      <h3>Aanmelden voor Android beta</h3>
+      <p>ShopBaas voor Android is momenteel in testfase. Laat je e-mailadres achter en ontvang een uitnodiging zodra er plek beschikbaar is.</p>
       <div class="android-modal-form">
         <input type="email" class="android-modal-input" id="androidEmail" placeholder="je@email.nl" autocomplete="email"/>
         <button class="android-modal-btn" id="androidSubmitBtn" onclick="submitAndroidTester()">Aanmelden</button>
       </div>
       <div class="android-modal-error" id="androidError"></div>
-      <div class="android-modal-counter" id="androidCounter">
-        <span id="androidCountText">0/12 testers aangemeld</span>
-        <div class="bar"><div class="bar-fill" id="androidBar" style="width:0%"></div></div>
-      </div>
     </div>
     <div class="android-modal-success" id="androidModalSuccess" style="display:none;">
       <div class="success-check">&#10003;</div>
-      <h3>Je bent aangemeld!</h3>
-      <p>We sturen je een uitnodiging op <strong id="androidEmailConfirm"></strong> zodra we genoeg testers hebben.</p>
+      <h3>Aanmelding ontvangen</h3>
+      <p>We sturen een uitnodiging naar <strong id="androidEmailConfirm"></strong> zodra er plek is.</p>
     </div>
   </div>
 </div>
