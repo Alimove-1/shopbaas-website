@@ -1,5 +1,6 @@
-// Cookie consent banner + TikTok Pixel (GDPR compliant)
-// Only loads TikTok pixel after user explicitly accepts cookies
+// Cookie consent banner — GDPR compliant (GA4 Consent Mode v2 + TikTok Pixel)
+// GA4 consent default is set inline in <head> (before gtag config).
+// This script handles the banner UI + consent updates.
 (function() {
   var CONSENT_KEY = 'shopbaas_cookie_consent';
   var PIXEL_ID = 'D6NC09BC77UBTM3F3TU0';
@@ -15,13 +16,33 @@
     }(window, document, 'ttq');
   }
 
+  function grantConsent() {
+    // GA4: update consent to granted
+    if (typeof gtag === 'function') {
+      gtag('consent', 'update', {
+        analytics_storage: 'granted',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+    }
+    // Load TikTok Pixel
+    loadTikTokPixel();
+  }
+
+  function denyConsent() {
+    // GA4 stays in denied mode (set in <head>) — cookieless pings only
+    // TikTok Pixel not loaded
+  }
+
   // Check existing consent
   var consent = localStorage.getItem(CONSENT_KEY);
   if (consent === 'accepted') {
-    loadTikTokPixel();
+    grantConsent();
     return; // No banner needed
   }
   if (consent === 'declined') {
+    denyConsent();
     return; // No banner, no pixel
   }
 
@@ -31,8 +52,8 @@
   banner.innerHTML =
     '<div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">' +
       '<p style="flex:1;min-width:200px;margin:0;font-size:13px;line-height:1.5;color:#9ba3c2">' +
-        'We gebruiken cookies voor analyse (TikTok Pixel) om onze website te verbeteren. ' +
-        '<a href="/privacy.html" style="color:#a29bfe;text-decoration:underline">Privacybeleid</a>' +
+        'We gebruiken cookies voor analytics (Google Analytics, TikTok Pixel) om onze website te verbeteren. ' +
+        '<a href="/privacy" style="color:#a29bfe;text-decoration:underline">Privacybeleid</a>' +
       '</p>' +
       '<div style="display:flex;gap:8px;flex-shrink:0">' +
         '<button id="cookie-decline" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:transparent;color:#9ba3c2;font-size:13px;font-weight:600;cursor:pointer">Weigeren</button>' +
@@ -46,11 +67,12 @@
   document.getElementById('cookie-accept').addEventListener('click', function() {
     localStorage.setItem(CONSENT_KEY, 'accepted');
     banner.remove();
-    loadTikTokPixel();
+    grantConsent();
   });
 
   document.getElementById('cookie-decline').addEventListener('click', function() {
     localStorage.setItem(CONSENT_KEY, 'declined');
     banner.remove();
+    denyConsent();
   });
 })();
