@@ -67,8 +67,17 @@
     "slug": "supermarkt-aanbiedingen-week-16-2026",
     "title": "Beste supermarkt aanbiedingen week 16 (13 april – 19 april 2026)",
     "dateRange": "13 april – 19 april 2026",
-    "totalDeals": 354,
-    "storeCount": 3,
+    "totalDeals": 591,
+    "storeCount": 6,
+    "year": 2026
+  },
+  "supermarkt-aanbiedingen-week-17-2026": {
+    "weekNum": 17,
+    "slug": "supermarkt-aanbiedingen-week-17-2026",
+    "title": "Beste supermarkt aanbiedingen week 17 (20 april – 26 april 2026)",
+    "dateRange": "20 april – 26 april 2026",
+    "totalDeals": 436,
+    "storeCount": 4,
     "year": 2026
   }
 }
